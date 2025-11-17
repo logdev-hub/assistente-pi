@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processos Logísticos - Implementação PI UC2</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --cor-primaria: #0056b3;
+            --cor-secundaria: #ff9800;
+            --cor-sucesso: #28a745;
+            --cor-perigo: #dc3545;
+            --cor-purpura: #6f42c1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--cor-primaria) 0%, #003d82 100%);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 86, 179, 0.3);
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .container-processos {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* NAVEGAÇÃO ABAS */
+        .nav-abas {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            padding: 10px 20px;
+            border: 2px solid #ddd;
+            background: white;
+            color: #333;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .nav-link:hover {
+            background: #f8f9fa;
+            border-color: var(--cor-primaria);
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background: var(--cor-primaria);
+            color: white;
+            border-color: var(--cor-primaria);
+            box-shadow: 0 4px 12px rgba(0, 86, 179, 0.3);
+        }
+
+        /* ABAS DE CONTEÚDO */
+        .tab-content {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* QUADRO DE ATIVIDADES */
+        .card-header {
+            background: linear-gradient(135deg, var(--cor-primaria) 0%, #003d82 100%);
+            color: white;
+            font-weight: 600;
+            padding: 15px;
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table thead {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .table tbody tr:hover {
+            background: #f1f3f5 !important;
+            transition: all 0.2s ease;
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        /* FLUXOGRAMA */
+        .fluxograma-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .fluxograma-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            max-width: 400px;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--cor-primaria);
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .fluxograma-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .etapa-numero {
+            min-width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 1.2em;
+            color: white;
+        }
+
+        .etapa-info {
+            flex: 1;
+        }
+
+        .etapa-info strong {
+            display: block;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .tempo-badge {
+            display: inline-block;
+            background: #e3f2fd;
+            color: var(--cor-primaria);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .fluxograma-arrow {
+            font-size: 2em;
+            color: var(--cor-primaria);
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+
+        /* CHECKLIST */
+        .checklist-wrapper {
+            margin: 20px 0;
+        }
+
+        .checklist-item {
+            padding: 12px;
+            margin-bottom: 8px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 3px solid #ddd;
+            transition: all 0.3s ease;
+        }
+
+        .checklist-item.critico {
+            border-left-color: var(--cor-perigo);
+            background: #ffe6e6;
+        }
+
+        .form-check-input {
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+        }
+
+        .form-check-label {
+            cursor: pointer;
+            margin-left: 10px;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--cor-primaria);
+            border-color: var(--cor-primaria);
+        }
+
+        .critico-icon {
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+
+        /* BOTÕES DE AÇÃO */
+        .botoes-acao {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--cor-primaria);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #003d82;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 86, 179, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            border: none;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .nav-abas {
+                flex-direction: column;
+            }
+
+            .nav-link {
+                min-width: 100%;
+            }
+
+            .tab-content {
+                padding: 15px;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            .fluxograma-card {
+                max-width: 100%;
+            }
+
+            .botoes-acao {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* SEÇÃO DE INFORMAÇÕES */
+        .info-section {
+            background: #e3f2fd;
+            border-left: 4px solid var(--cor-primaria);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .info-section strong {
+            color: var(--cor-primaria);
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <h1>📦 Processos Logísticos</h1>
+            <p>Implementação Prática do PI - UC2 | DistribuidoraTech Brasil</p>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="container-processos">
+        <!-- INFORMAÇÕES INICIAIS -->
+        <div class="info-section">
+            <strong>ℹ️ Como Usar:</strong> Selecione um processo nas abas abaixo para visualizar o quadro de atividades, 
+            fluxograma e checklist. Use o checklist para acompanhar cada etapa do processo.
+        </div>
+
+        <!-- NAVEGAÇÃO POR ABAS -->
+        <div id="processos-abas" class="nav-abas"></div>
+
+        <!-- CONTEÚDO DO PROCESSO -->
+        <div id="quadro-container"></div>
+
+        <div class="tab-content">
+            <h4 class="mb-3">📊 Fluxograma Visual</h4>
+            <div id="fluxograma-container"></div>
+        </div>
+
+        <div class="tab-content">
+            <h4 class="mb-3">✓ Checklist de Verificação</h4>
+            <div class="botoes-acao">
+                <button class="btn btn-primary" id="btn-imprimir-checklist">
+                    🖨️ Imprimir Checklist
+                </button>
+                <button class="btn btn-secondary" onclick="exportarChecklistCSV()">
+                    📥 Exportar CSV
+                </button>
+                <button class="btn btn-secondary" onclick="resetarChecklist()">
+                    🔄 Limpar Checklist
+                </button>
+            </div>
+            <div id="checklist-container" class="mt-4"></div>
+        </div>
+
+        <!-- TABELA DE COMPARAÇÃO -->
+        <div class="tab-content mt-4">
+            <h4 class="mb-3">📈 Comparativo de Processos</h4>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Processo</th>
+                            <th>Tempo Total</th>
+                            <th>Etapas</th>
+                            <th>Responsável Principal</th>
+                            <th>Recursos Principais</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-comparativo"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>📄 Implementação Prática do PI - UC2 | DistribuidoraTech Brasil | 2025</p>
+        <p style="font-size: 0.9em; opacity: 0.8;">Todos os direitos reservados • Projeto Acadêmico</p>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- DADOS DOS PROCESSOS (inline) -->
+    <script>
+        window.PROCESSOS_DATA = {
+            "processos": [
+                {
+                    "id": 1,
+                    "codigo": "PROC_001",
+                    "titulo": "Recebimento",
+                    "tempo_total_minutos": 190,
+                    "tempo_total_horas_minutos": "3h10min",
+                    "descricao": "Processo de recepção de materiais do fornecedor com todas as conferências",
+                    "cor": "#0056b3",
+                    "icone": "📦",
+                    "etapas": [
+                        {"num": 1, "nome": "Preparação pré-recebimento", "tempo": 10, "descricao": "Análise de nota fiscal eletrônica (NF-e), ordem de compra e ASN; alocação de doca", "responsavel": "Assistente administrativo", "recursos": "Computador, WMS, impressora"},
+                        {"num": 2, "nome": "Chegada e conferência inicial", "tempo": 5, "descricao": "Verificação de placa do veículo, identificação do motorista, conferência de lacre", "responsavel": "Conferente de recebimento", "recursos": "Prancheta, checklist, câmera"},
+                        {"num": 3, "nome": "Agendamento de descarga", "tempo": 8, "descricao": "Direcionamento para doca disponível, posicionamento do veículo", "responsavel": "Operador de pátio", "recursos": "Cones, placas sinalizadoras"},
+                        {"num": 4, "nome": "Abertura e inspeção visual", "tempo": 7, "descricao": "Abertura do baú, verificação inicial de avarias visíveis, temperatura", "responsavel": "Conferente + Operador emp.", "recursos": "EPI, termômetro"},
+                        {"num": 5, "nome": "Descarga de mercadorias", "tempo": 45, "descricao": "Descarregamento com empilhadeira, separação por lote", "responsavel": "2 operadores + 1 auxiliar", "recursos": "Empilhadeira, paletes"},
+                        {"num": 6, "nome": "Conferência quantitativa", "tempo": 25, "descricao": "Contagem de volumes, comparação com Nota Fiscal", "responsavel": "2 conferentes", "recursos": "Balança, smartphone"},
+                        {"num": 7, "nome": "Conferência qualitativa", "tempo": 30, "descricao": "Inspeção de qualidade amostral, fotografias de avarias", "responsavel": "Conferente de qualidade", "recursos": "Câmera, formulários"},
+                        {"num": 8, "nome": "Triagem e classificação", "tempo": 15, "descricao": "Separação por categoria, identificação e codificação de lotes", "responsavel": "Auxiliar de armazém", "recursos": "Etiquetas, marcadores"},
+                        {"num": 9, "nome": "Emissão de etiquetas", "tempo": 12, "descricao": "Geração e aplicação de etiquetas com código de barras", "responsavel": "Assistente administrativo", "recursos": "Impressora etiquetas"},
+                        {"num": 10, "nome": "Registro no sistema", "tempo": 18, "descricao": "Lançamento da Nota Fiscal no ERP/WMS", "responsavel": "Assistente administrativo", "recursos": "Computador, WMS/ERP"},
+                        {"num": 11, "nome": "Segregação não-conformidades", "tempo": 10, "descricao": "Separação de itens avariados em área de quarentena", "responsavel": "Conferente de qualidade", "recursos": "Área quarentena"},
+                        {"num": 12, "nome": "Liberação para armazenagem", "tempo": 5, "descricao": "Autorização de movimentação, geração de ordem de put away", "responsavel": "Supervisor de recebimento", "recursos": "Sistema WMS"}
+                    ],
+                    "checklist": [
+                        {
+                            "secao": "DOCUMENTAÇÃO",
+                            "itens": [
+                                {"id": "D1", "item": "Nota Fiscal Eletrônica (NF-e) recebida e validada", "critico": true},
+                                {"id": "D2", "item": "Ordem de Compra (OC) conferida com NF", "critico": true},
+                                {"id": "D3", "item": "ASN (Advanced Shipping Notice) comparado", "critico": false},
+                                {"id": "D4", "item": "Documentação organizada em pasta", "critico": false}
+                            ]
+                        },
+                        {
+                            "secao": "RECEPÇÃO FÍSICA",
+                            "itens": [
+                                {"id": "R1", "item": "Placa do veículo conferida", "critico": false},
+                                {"id": "R2", "item": "Motorista identificado", "critico": true},
+                                {"id": "R3", "item": "Lacre de segurança intacto", "critico": true},
+                                {"id": "R4", "item": "Condições externas verificadas", "critico": false},
+                                {"id": "R5", "item": "Temperatura registrada", "critico": true}
+                            ]
+                        },
+                        {
+                            "secao": "CONFERÊNCIA",
+                            "itens": [
+                                {"id": "C1", "item": "Volumes contados fisicamente", "critico": true},
+                                {"id": "C2", "item": "Quantidade confere com NF", "critico": true},
+                                {"id": "C3", "item": "Avarias fotografadas", "critico": false},
+                                {"id": "C4", "item": "Códigos lidos e validados", "critico": true}
+                            ]
+                        },
+                        {
+                            "secao": "LIBERAÇÃO",
+                            "itens": [
+                                {"id": "L1", "item": "Não-conformidades segregadas", "critico": true},
+                                {"id": "L2", "item": "Ordem put away gerada", "critico": true},
+                                {"id": "L3", "item": "Supervisor autoriza movimentação", "critico": true}
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "codigo": "PROC_002",
+                    "titulo": "Preparação para Armazenagem",
+                    "tempo_total_minutos": 85,
+                    "tempo_total_horas_minutos": "1h25min",
+                    "descricao": "Preparação dos materiais recebidos para armazenagem eficiente",
+                    "cor": "#ff9800",
+                    "icone": "🏭",
+                    "etapas": [
+                        {"num": 1, "nome": "Recebimento ordem put away", "tempo": 3, "descricao": "Leitura e confirmação de ordem no sistema via RF", "responsavel": "Operador de armazém", "recursos": "Terminal RF/tablet"},
+                        {"num": 2, "nome": "Verificação compatibilidade", "tempo": 5, "descricao": "Verificação de locais disponíveis, restrições", "responsavel": "Operador de armazém", "recursos": "Sistema WMS"},
+                        {"num": 3, "nome": "Organização de carga", "tempo": 15, "descricao": "Agrupamento por destino, peso, fragilidade", "responsavel": "Auxiliar de armazém", "recursos": "Balança, etiquetas"},
+                        {"num": 4, "nome": "Aplicação de identificadores", "tempo": 10, "descricao": "Etiquetas de localização, data, lote", "responsavel": "Auxiliar de armazém", "recursos": "Impressora etiquetas"},
+                        {"num": 5, "nome": "Preparação de equipamentos", "tempo": 8, "descricao": "Seleção de empilhadeira, paletes, suportes", "responsavel": "Operador de empilhadeira", "recursos": "Empilhadeira, paletes"},
+                        {"num": 6, "nome": "Conferência pré-armazenagem", "tempo": 12, "descricao": "Verificação final de integridade", "responsavel": "Supervisor de armazém", "recursos": "Prancheta, checklist"},
+                        {"num": 7, "nome": "Apontamento no WMS", "tempo": 8, "descricao": "Confirmação no sistema via terminal RF", "responsavel": "Operador de armazém", "recursos": "Terminal RF"},
+                        {"num": 8, "nome": "Autorização para armazenagem", "tempo": 4, "descricao": "Liberação final pelo supervisor", "responsavel": "Supervisor de armazém", "recursos": "Sistema autorização"}
+                    ],
+                    "checklist": [
+                        {
+                            "secao": "ORDENS E RECEBIMENTO",
+                            "itens": [
+                                {"id": "OR1", "item": "Ordem put away recebida", "critico": true},
+                                {"id": "OR2", "item": "Todos itens conferem", "critico": true}
+                            ]
+                        },
+                        {
+                            "secao": "ORGANIZAÇÃO",
+                            "itens": [
+                                {"id": "OG1", "item": "Materiais agrupados por categoria", "critico": false},
+                                {"id": "OG2", "item": "Paletes preparadas conforme spec", "critico": true},
+                                {"id": "OG3", "item": "Etiquetas aplicadas", "critico": false}
+                            ]
+                        },
+                        {
+                            "secao": "EQUIPAMENTOS",
+                            "itens": [
+                                {"id": "EQ1", "item": "Empilhadeira apropriada", "critico": true},
+                                {"id": "EQ2", "item": "Acessórios verificados", "critico": false}
+                            ]
+                        },
+                        {
+                            "secao": "AUTORIZAÇÃO",
+                            "itens": [
+                                {"id": "AU1", "item": "Documento revisado", "critico": true},
+                                {"id": "AU2", "item": "Liberação concedida", "critico": true},
+                                {"id": "AU3", "item": "Operador confirmou", "critico": true}
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 3,
+                    "codigo": "PROC_003",
+                    "titulo": "Armazenagem",
+                    "tempo_total_minutos": 120,
+                    "tempo_total_horas_minutos": "2h",
+                    "descricao": "Armazenagem eficiente e otimizada dos materiais",
+                    "cor": "#28a745",
+                    "icone": "📦",
+                    "etapas": [
+                        {"num": 1, "nome": "Leitura ordem armazenagem", "tempo": 3, "descricao": "Confirmação RF do destino final", "responsavel": "Operador de empilhadeira", "recursos": "Terminal RF"},
+                        {"num": 2, "nome": "Roteirização interna", "tempo": 7, "descricao": "Planejamento de rota eficiente", "responsavel": "Operador de empilhadeira", "recursos": "Mapa armazém, WMS"},
+                        {"num": 3, "nome": "Movimentação interna", "tempo": 40, "descricao": "Transporte para local armazenagem", "responsavel": "Operador de empilhadeira", "recursos": "Empilhadeira"},
+                        {"num": 4, "nome": "Posicionamento na localização", "tempo": 35, "descricao": "Acomodação segura, empilhamento", "responsavel": "Operador de empilhadeira", "recursos": "Equipamento segurança"},
+                        {"num": 5, "nome": "Confirmação de localização", "tempo": 8, "descricao": "Leitura código barras do endereço", "responsavel": "Operador de empilhadeira", "recursos": "Terminal RF"},
+                        {"num": 6, "nome": "Atualização de saldo", "tempo": 5, "descricao": "Confirmação WMS quantidade", "responsavel": "Operador de empilhadeira", "recursos": "Sistema WMS"},
+                        {"num": 7, "nome": "Fotografia/Auditoria", "tempo": 15, "descricao": "Registro fotográfico (amostral 10%)", "responsavel": "Supervisor de armazém", "recursos": "Câmera/celular"},
+                        {"num": 8, "nome": "Encerramento", "tempo": 7, "descricao": "Finalização no sistema", "responsavel": "Supervisor de armazém", "recursos": "Sistema WMS"}
+                    ],
+                    "checklist": [
+                        {
+                            "secao": "MOVIMENTAÇÃO",
+                            "itens": [
+                                {"id": "MV1", "item": "Ordem confirmada no RF", "critico": true},
+                                {"id": "MV2", "item": "Rota otimizada", "critico": false},
+                                {"id": "MV3", "item": "Equipamento apropriado", "critico": true}
+                            ]
+                        },
+                        {
+                            "secao": "POSICIONAMENTO",
+                            "itens": [
+                                {"id": "PS1", "item": "Localização conferida", "critico": true},
+                                {"id": "PS2", "item": "Carga posicionada com segurança", "critico": true}
+                            ]
+                        },
+                        {
+                            "secao": "CONFIRMAÇÃO",
+                            "itens": [
+                                {"id": "CF1", "item": "Código barras lido", "critico": true},
+                                {"id": "CF2", "item": "Quantidade confirmada WMS", "critico": true}
+                            ]
+                        },
+                        {
+                            "secao": "AUDITORIA",
+                            "itens": [
+                                {"id": "AD1", "item": "Foto da carga (amostral)", "critico": false},
+                                {"id": "AD2", "item": "Sistema finalizado", "critico": true}
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 4,
+                    "codigo": "PROC_004",
+                    "titulo": "Separação de Materiais",
+                    "tempo_total_minutos": 155,
+                    "tempo_total_horas_minutos": "2h35min",
+                    "descricao": "Processo de separação de pedidos para expedição (picking)",
+                    "cor": "#dc3545",
+                    "icone": "🚚",
+                    "etapas": [
+                        {"num": 1, "nome": "Recebimento ordem venda", "tempo": 5, "descricao": "Download pedido RF, leitura SKUs", "responsavel": "Operador picking", "recursos": "Terminal RF"},
+                        {"num": 2, "nome": "Otimização rota picking", "tempo": 8, "descricao": "Sequenciamento eficiente endereços", "responsavel": "Sistema/Operador", "recursos": "Sistema WMS"},
+                        {"num": 3, "nome": "Movimentação primeira localização", "tempo": 15, "descricao": "Deslocamento eficiente armazém", "responsavel": "Operador picking", "recursos": "Carrinho picking"},
+                        {"num": 4, "nome": "Picking de itens", "tempo": 85, "descricao": "Coleta itens conforme quantidade", "responsavel": "Operador picking", "recursos": "Coletor, código barras"},
+                        {"num": 5, "nome": "Conferência de picking", "tempo": 18, "descricao": "Verificação quantidade e código", "responsavel": "Conferente picking", "recursos": "Coletor"},
+                        {"num": 6, "nome": "Embalagem/Unitização", "tempo": 12, "descricao": "Agrupamento caixa/palete", "responsavel": "Auxiliar expedição", "recursos": "Caixas, paletes"},
+                        {"num": 7, "nome": "Aplicação rótulo expedição", "tempo": 8, "descricao": "Etiqueta destinatário, código", "responsavel": "Auxiliar expedição", "recursos": "Impressora etiquetas"},
+                        {"num": 8, "nome": "Movimentação zona expedição", "tempo": 4, "descricao": "Transporte para área saída", "responsavel": "Operador emp.", "recursos": "Empilhadeira"}
+                    ],
+                    "checklist": [
+                        {
+                            "secao": "RECEBIMENTO",
+                            "itens": [
+                                {"id": "RC1", "item": "Ordem venda recebida RF", "critico": true},
+                                {"id": "RC2", "item": "Todos SKUs carregados", "critico": true}
+                            ]
+                        },
+                        {
+                            "secao": "PICKING",
+                            "itens": [
+                                {"id": "PK1", "item": "Rota otimizada consultada", "critico": false},
+                                {"id": "PK2", "item": "Cada localização visitada uma vez", "critico": true},
+                                {"id": "PK3", "item": "Quantidade correta separada", "critico": true}
+                            ]
+                        },
+                        {
+                            "secao": "CONFERÊNCIA",
+                            "itens": [
+                                {"id": "CF1", "item": "Código barras conferido", "critico": true},
+                                {"id": "CF2", "item": "Quantidade confere pedido", "critico": true}
+                            ]
+                        },
+                        {
+                            "secao": "EMBALAGEM",
+                            "itens": [
+                                {"id": "EB1", "item": "Materiais agrupados por pedido", "critico": true},
+                                {"id": "EB2", "item": "Embalagem apropriada", "critico": false}
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 5,
+                    "codigo": "PROC_005",
+                    "titulo": "Expedição",
+                    "tempo_total_minutos": 135,
+                    "tempo_total_horas_minutos": "2h15min",
+                    "descricao": "Preparação e envio de materiais para clientes",
+                    "cor": "#6f42c1",
+                    "icone": "📈",
+                    "etapas": [
+                        {"num": 1, "nome": "Recebimento pedidos expedição", "tempo": 5, "descricao": "Listagem pedidos a despachar", "responsavel": "Supervisor expedição", "recursos": "Sistema WMS"},
+                        {"num": 2, "nome": "Conferência documental", "tempo": 10, "descricao": "Verificação NF, cliente, endereço", "responsavel": "Assistente expedição", "recursos": "Documentos"},
+                        {"num": 3, "nome": "Agrupamento de pedidos", "tempo": 12, "descricao": "Organização por destino/transportadora", "responsavel": "Operador expedição", "recursos": "Prancheta, mapa"},
+                        {"num": 4, "nome": "Conferência final vs pedido", "tempo": 25, "descricao": "Verificação quantidade, integridade", "responsavel": "Conferente expedição", "recursos": "Código barras"},
+                        {"num": 5, "nome": "Geração documento saída", "tempo": 8, "descricao": "Romaneio, manifesto, CTRC", "responsavel": "Assistente expedição", "recursos": "Impressora"},
+                        {"num": 6, "nome": "Embalagem final/proteção", "tempo": 20, "descricao": "Proteção adicional, amortecimento", "responsavel": "Operador expedição", "recursos": "Materiais proteção"},
+                        {"num": 7, "nome": "Posicionamento zona carga", "tempo": 15, "descricao": "Organização na doca", "responsavel": "Operador emp.", "recursos": "Empilhadeira"},
+                        {"num": 8, "nome": "Carregamento no veículo", "tempo": 28, "descricao": "Movimentação para caminhão", "responsavel": "Operador emp. + motorista", "recursos": "Empilhadeira"},
+                        {"num": 9, "nome": "Fechamento e lacre", "tempo": 6, "descricao": "Fechamento baú, colocação lacre", "responsavel": "Supervisor expedição", "recursos": "Lacre"},
+                        {"num": 10, "nome": "Registro de saída", "tempo": 6, "descricao": "Atualização WMS/ERP", "responsavel": "Assistente expedição", "recursos": "Sistema WMS"}
+                    ],
+                    "checklist": [
+                        {
+                            "secao": "RECEBIMENTO E CONFERÊNCIA",
+                            "itens": [
+                                {"id": "REC1", "item": "Todos pedidos chegaram", "critico": true},
+                                {"id": "REC2", "item": "Documentação completa", "critico": true}
+                            ]
+                        },
+                        {
+                            "secao": "PREPARAÇÃO",
+                            "itens": [
+                                {"id": "PREP1", "item": "Pedidos agrupados por rota", "critico": false},
+                                {"id": "PREP2", "item": "Cálculo frete correto", "critico": true},
+                                {"id": "PREP3", "item": "Documento saída gerado", "critico": true}
+                            ]
+                        },
+                        {
+                            "secao": "EMBALAGEM",
+                            "itens": [
+                                {"id": "EMB1", "item": "Quantidade conferida", "critico": true},
+                                {"id": "EMB2", "item": "Proteção aplicada", "critico": false}
+                            ]
+                        },
+                        {
+                            "secao": "CARGA E SAÍDA",
+                            "itens": [
+                                {"id": "CSA1", "item": "Veículo apropriado", "critico": false},
+                                {"id": "CSA2", "item": "Carga arrumada com segurança", "critico": true},
+                                {"id": "CSA3", "item": "Lacre aplicado", "critico": true}
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+    </script>
+
+    <!-- MÓDULO DE PROCESSOS -->
+    <script>
+        // Dados completos dos 5 processos (carregados dinamicamente)
+        let processosData = {};
+        let processosAtivo = 1;
+
+        // Função para carregar dados dos processos
+        function carregarProcessos() {
+            try {
+                processosData = window.PROCESSOS_DATA || {};
+                inicializarProcessos();
+            } catch (error) {
+                console.error('Erro ao carregar processos:', error);
+            }
+        }
+
+        // Inicializar interface de processos
+        function inicializarProcessos() {
+            criarAbas();
+            mostrarProcesso(processosAtivo);
+            criarTabelaComparativa();
+            setupEventListeners();
+        }
+
+        // Criar abas de navegação entre processos
+        function criarAbas() {
+            const container = document.getElementById('processos-abas');
+            if (!container || !processosData.processos) return;
+
+            container.innerHTML = '';
+
+            processosData.processos.forEach(proc => {
+                const aba = document.createElement('button');
+                aba.className = `nav-link ${proc.id === processosAtivo ? 'active' : ''}`;
+                aba.textContent = `${proc.icone} ${proc.titulo}`;
+                aba.onclick = () => mostrarProcesso(proc.id);
+                container.appendChild(aba);
+            });
+        }
+
+        // Mostrar processo selecionado
+        function mostrarProcesso(idProcesso) {
+            processosAtivo = idProcesso;
+            const processo = processosData.processos.find(p => p.id === idProcesso);
+
+            if (!processo) return;
+
+            // Atualizar aba ativa
+            document.querySelectorAll('.nav-link').forEach((btn, idx) => {
+                btn.classList.toggle('active', idx + 1 === idProcesso);
+            });
+
+            // Mostrar conteúdo
+            mostrarQuadro(processo);
+            mostrarFluxograma(processo);
+            mostrarChecklist(processo);
+        }
+
+        // Mostrar quadro de atividades
+        function mostrarQuadro(processo) {
+            const container = document.getElementById('quadro-container');
+            if (!container) return;
+
+            let html = `
+                <div class="card mb-4">
+                    <div class="card-header" style="background-color: ${processo.cor}">
+                        <h5 class="mb-0" style="color: white;">
+                            ${processo.icone} ${processo.titulo}
+                            <span class="badge badge-light float-end">${processo.tempo_total_horas_minutos}</span>
+                        </h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-sm mb-0">
+                                <thead style="background-color: #f8f9fa;">
+                                    <tr>
+                                        <th style="width: 5%;">Nº</th>
+                                        <th style="width: 25%;">Etapa</th>
+                                        <th style="width: 8%;">Tempo</th>
+                                        <th style="width: 35%;">Descrição</th>
+                                        <th style="width: 15%;">Responsável</th>
+                                        <th style="width: 12%;">Recursos</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+            `;
+
+            processo.etapas.forEach((etapa, idx) => {
+                const bgColor = idx % 2 === 0 ? '#ffffff' : '#f8f9fa';
+                html += `
+                    <tr style="background-color: ${bgColor};">
+                        <td><strong>${etapa.num}</strong></td>
+                        <td><strong>${etapa.nome}</strong></td>
+                        <td><span class="badge bg-primary">${etapa.tempo}min</span></td>
+                        <td><small>${etapa.descricao}</small></td>
+                        <td><small>${etapa.responsavel}</small></td>
+                        <td><small>${etapa.recursos}</small></td>
+                    </tr>
+                `;
+            });
+
+            const tempoTotal = processo.etapas.reduce((sum, e) => sum + e.tempo, 0);
+            html += `
+                                </tbody>
+                                <tfoot style="background-color: #e9ecef; font-weight: bold;">
+                                    <tr>
+                                        <td colspan="2">TEMPO TOTAL</td>
+                                        <td><span class="badge bg-danger">${tempoTotal}min</span></td>
+                                        <td colspan="3"></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        // Mostrar fluxograma visual
+        function mostrarFluxograma(processo) {
+            const container = document.getElementById('fluxograma-container');
+            if (!container) return;
+
+            let html = '<div class="fluxograma-wrapper">';
+
+            processo.etapas.forEach((etapa, idx) => {
+                html += `
+                    <div class="fluxograma-card" style="background: linear-gradient(135deg, ${processo.cor}20 0%, ${processo.cor}05 100%);">
+                        <div class="etapa-numero" style="background-color: ${processo.cor}; color: white;">
+                            ${etapa.num}
+                        </div>
+                        <div class="etapa-info">
+                            <strong>${etapa.nome}</strong>
+                            <p class="tempo-badge">${etapa.tempo} min</p>
+                        </div>
+                    </div>
+                `;
+
+                if (idx < processo.etapas.length - 1) {
+                    html += '<div class="fluxograma-arrow">↓</div>';
+                }
+            });
+
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        // Mostrar checklist
+        function mostrarChecklist(processo) {
+            const container = document.getElementById('checklist-container');
+            if (!container) return;
+
+            let html = '<div class="checklist-wrapper">';
+
+            processo.checklist.forEach((secao, secaoIdx) => {
+                html += `
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0">
+                                <strong>✓ ${secao.secao}</strong>
+                            </h6>
+                        </div>
+                        <div class="card-body pt-3">
+                            <div class="checklist-items">
+                `;
+
+                secao.itens.forEach(item => {
+                    const criticoClass = item.critico ? 'critico' : '';
+                    const criticoIcon = item.critico ? '⚠️' : '✔️';
+
+                    html += `
+                        <div class="checklist-item ${criticoClass}">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="check_${item.id}">
+                                <label class="form-check-label" for="check_${item.id}">
+                                    <span class="critico-icon">${criticoIcon}</span>
+                                    ${item.item}
+                                </label>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        // Criar tabela comparativa
+        function criarTabelaComparativa() {
+            const tbody = document.getElementById('tabela-comparativo');
+            if (!tbody || !processosData.processos) return;
+
+            tbody.innerHTML = '';
+            processosData.processos.forEach(proc => {
+                const primeira_etapa = proc.etapas[0];
+                const primeira_resp = primeira_etapa?.responsavel?.split('+')[0]?.trim() || 'Variado';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${proc.icone} ${proc.titulo}</strong></td>
+                    <td><span class="badge bg-info">${proc.tempo_total_horas_minutos}</span></td>
+                    <td>${proc.etapas.length}</td>
+                    <td>${primeira_resp}</td>
+                    <td>${proc.etapas[0]?.recursos || 'Diversos'}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            document.addEventListener('change', function(e) {
+                if (e.target.classList.contains('form-check-input')) {
+                    const label = e.target.nextElementSibling;
+                    if (e.target.checked) {
+                        label.style.opacity = '0.6';
+                        label.style.textDecoration = 'line-through';
+                    } else {
+                        label.style.opacity = '1';
+                        label.style.textDecoration = 'none';
+                    }
+                }
+            });
+
+            const btnImprimir = document.getElementById('btn-imprimir-checklist');
+            if (btnImprimir) {
+                btnImprimir.addEventListener('click', imprimirChecklist);
+            }
+        }
+
+        // Imprimir checklist
+        function imprimirChecklist() {
+            const processo = processosData.processos.find(p => p.id === processosAtivo);
+            if (!processo) return;
+
+            const printWindow = window.open('', '', 'height=600,width=800');
+
+            let conteudo = `
+                <html>
+                <head>
+                    <title>Checklist - ${processo.titulo}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; }
+                        h1 { text-align: center; color: #333; }
+                        h2 { color: #0056b3; margin-top: 20px; border-bottom: 2px solid #0056b3; }
+                        .item { margin: 10px 0; }
+                        .critico { color: red; font-weight: bold; }
+                    </style>
+                </head>
+                <body>
+                    <h1>Checklist - ${processo.titulo}</h1>
+                    <p><strong>Tempo Total:</strong> ${processo.tempo_total_horas_minutos}</p>
+            `;
+
+            processo.checklist.forEach(secao => {
+                conteudo += `<h2>${secao.secao}</h2>`;
+
+                secao.itens.forEach(item => {
+                    const criticoClass = item.critico ? 'critico' : '';
+                    conteudo += `
+                        <div class="item">
+                            <input type="checkbox">
+                            <span class="${criticoClass}">${item.item}</span>
+                        </div>
+                    `;
+                });
+            });
+
+            conteudo += '</body></html>';
+
+            printWindow.document.write(conteudo);
+            printWindow.document.close();
+            setTimeout(() => printWindow.print(), 250);
+        }
+
+        // Exportar checklist para CSV
+        function exportarChecklistCSV() {
+            const processo = processosData.processos.find(p => p.id === processosAtivo);
+            if (!processo) return;
+
+            let csv = 'Processo,Seção,Item,Crítico\n';
+
+            processo.checklist.forEach(secao => {
+                secao.itens.forEach(item => {
+                    csv += `"${processo.titulo}","${secao.secao}","${item.item}","${item.critico ? 'Sim' : 'Não'}"\n`;
+                });
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `checklist-${processo.titulo}.csv`;
+            a.click();
+        }
+
+        // Resetar checklist
+        function resetarChecklist() {
+            document.querySelectorAll('.form-check-input').forEach(checkbox => {
+                checkbox.checked = false;
+                const label = checkbox.nextElementSibling;
+                label.style.opacity = '1';
+                label.style.textDecoration = 'none';
+            });
+        }
+
+        // Inicializar ao carregar página
+        document.addEventListener('DOMContentLoaded', carregarProcessos);
+    </script>
+</body>
+</html>

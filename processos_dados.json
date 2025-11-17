@@ -1,0 +1,812 @@
+{
+  "processos": [
+    {
+      "id": 1,
+      "codigo": "PROC_001",
+      "titulo": "Recebimento",
+      "tempo_total_minutos": 190,
+      "tempo_total_horas_minutos": "3h10min",
+      "descricao": "Processo de recepção de materiais do fornecedor com todas as conferências",
+      "cor": "#0056b3",
+      "icone": "📦",
+      "etapas": [
+        {
+          "num": 1,
+          "nome": "Preparação pré-recebimento",
+          "tempo": 10,
+          "descricao": "Análise de nota fiscal eletrônica (NF-e), ordem de compra e ASN; alocação de doca; separação de documentação",
+          "responsavel": "Assistente administrativo de recebimento",
+          "recursos": "Computador, WMS, impressora"
+        },
+        {
+          "num": 2,
+          "nome": "Chegada e conferência inicial",
+          "tempo": 5,
+          "descricao": "Verificação de placa do veículo, identificação do motorista, conferência de lacre e condições externas do caminhão",
+          "responsavel": "Conferente de recebimento",
+          "recursos": "Prancheta, checklist, câmera/celular"
+        },
+        {
+          "num": 3,
+          "nome": "Agendamento de descarga",
+          "tempo": 8,
+          "descricao": "Direcionamento para doca disponível, posicionamento do veículo, colocação de calços de segurança",
+          "responsavel": "Operador de pátio",
+          "recursos": "Cones, placas sinalizadoras, calços"
+        },
+        {
+          "num": 4,
+          "nome": "Abertura e inspeção visual",
+          "tempo": 7,
+          "descricao": "Abertura do baú, verificação inicial de avarias visíveis, temperatura (se aplicável), organização da carga",
+          "responsavel": "Conferente de recebimento + Operador de empilhadeira",
+          "recursos": "EPI, termômetro, documentação"
+        },
+        {
+          "num": 5,
+          "nome": "Descarga de mercadorias",
+          "tempo": 45,
+          "descricao": "Descarregamento com empilhadeira, paletes ou equipamentos apropriados, separação por lote",
+          "responsavel": "2 operadores + 1 auxiliar de armazém",
+          "recursos": "Empilhadeira, paletes, equipamentos de carga"
+        },
+        {
+          "num": 6,
+          "nome": "Conferência quantitativa",
+          "tempo": 25,
+          "descricao": "Contagem de volumes, comparação com Nota Fiscal, identificação de divergências",
+          "responsavel": "2 conferentes de recebimento",
+          "recursos": "Balança, pano de contagem, smartphone com leitor código barras"
+        },
+        {
+          "num": 7,
+          "nome": "Conferência qualitativa",
+          "tempo": 30,
+          "descricao": "Inspeção de qualidade amostral ou 100%, fotografias de avarias, formulário de não-conformidade",
+          "responsavel": "Conferente de qualidade",
+          "recursos": "Câmera, formulários, amostragem"
+        },
+        {
+          "num": 8,
+          "nome": "Triagem e classificação",
+          "tempo": 15,
+          "descricao": "Separação por categoria, identificação e codificação de lotes, agrupamento por destino",
+          "responsavel": "Auxiliar de armazém",
+          "recursos": "Etiquetas, marcadores, sistema de codificação"
+        },
+        {
+          "num": 9,
+          "nome": "Emissão de etiquetas",
+          "tempo": 12,
+          "descricao": "Geração e aplicação de etiquetas com código de barras, localização e identificação",
+          "responsavel": "Assistente administrativo",
+          "recursos": "Impressora de etiquetas, etiquetas, scanner"
+        },
+        {
+          "num": 10,
+          "nome": "Registro no sistema",
+          "tempo": 18,
+          "descricao": "Lançamento da Nota Fiscal no ERP/WMS com todas as informações",
+          "responsavel": "Assistente administrativo",
+          "recursos": "Computador, sistema WMS/ERP"
+        },
+        {
+          "num": 11,
+          "nome": "Segregação de não-conformidades",
+          "tempo": 10,
+          "descricao": "Separação de itens avariados em área de quarentena, documentação de problemas",
+          "responsavel": "Conferente de qualidade",
+          "recursos": "Área quarentena, etiquetas de aviso"
+        },
+        {
+          "num": 12,
+          "nome": "Liberação para armazenagem",
+          "tempo": 5,
+          "descricao": "Autorização de movimentação, geração de ordem de put away no WMS",
+          "responsavel": "Supervisor de recebimento",
+          "recursos": "Sistema WMS, autorização eletrônica"
+        }
+      ],
+      "checklist": [
+        {
+          "secao": "DOCUMENTAÇÃO",
+          "itens": [
+            {
+              "id": "D1",
+              "item": "Nota Fiscal Eletrônica (NF-e) recebida e validada",
+              "critico": true
+            },
+            {
+              "id": "D2",
+              "item": "Ordem de Compra (OC) conferida com NF",
+              "critico": true
+            },
+            {
+              "id": "D3",
+              "item": "ASN (Advanced Shipping Notice) comparado com entrega",
+              "critico": false
+            },
+            {
+              "id": "D4",
+              "item": "Documentação organizada em pasta específica do fornecedor",
+              "critico": false
+            }
+          ]
+        },
+        {
+          "secao": "RECEPÇÃO FÍSICA",
+          "itens": [
+            {
+              "id": "R1",
+              "item": "Placa do veículo conferida e registrada",
+              "critico": false
+            },
+            {
+              "id": "R2",
+              "item": "Motorista identificado com documento válido",
+              "critico": true
+            },
+            {
+              "id": "R3",
+              "item": "Lacre de segurança do veículo intacto",
+              "critico": true
+            },
+            {
+              "id": "R4",
+              "item": "Condições externas do baú verificadas (avarias, vazamentos)",
+              "critico": false
+            },
+            {
+              "id": "R5",
+              "item": "Temperatura registrada (se aplicável ao produto)",
+              "critico": true
+            }
+          ]
+        },
+        {
+          "secao": "CONFERÊNCIA",
+          "itens": [
+            {
+              "id": "C1",
+              "item": "Volumes totais contados fisicamente",
+              "critico": true
+            },
+            {
+              "id": "C2",
+              "item": "Quantidade total confere com NF",
+              "critico": true
+            },
+            {
+              "id": "C3",
+              "item": "Avarias externas fotografadas e documentadas",
+              "critico": false
+            },
+            {
+              "id": "C4",
+              "item": "Códigos de barras lidos e validados no sistema",
+              "critico": true
+            }
+          ]
+        },
+        {
+          "secao": "LIBERAÇÃO",
+          "itens": [
+            {
+              "id": "L1",
+              "item": "Não-conformidades segregadas em quarentena",
+              "critico": true
+            },
+            {
+              "id": "L2",
+              "item": "Ordem de put away gerada no WMS",
+              "critico": true
+            },
+            {
+              "id": "L3",
+              "item": "Supervisor autoriza movimentação para armazém",
+              "critico": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "codigo": "PROC_002",
+      "titulo": "Preparação para Armazenagem",
+      "tempo_total_minutos": 85,
+      "tempo_total_horas_minutos": "1h25min",
+      "descricao": "Preparação dos materiais recebidos para armazenagem eficiente e otimizada",
+      "cor": "#ff9800",
+      "icone": "🏭",
+      "etapas": [
+        {
+          "num": 1,
+          "nome": "Recebimento da ordem de put away",
+          "tempo": 3,
+          "descricao": "Leitura e confirmação de ordem no sistema via RF/tablet",
+          "responsavel": "Operador de armazém",
+          "recursos": "Terminal RF/tablet"
+        },
+        {
+          "num": 2,
+          "nome": "Verificação de compatibilidade de endereço",
+          "tempo": 5,
+          "descricao": "Verificação de locais disponíveis, restrições de localização",
+          "responsavel": "Operador de armazém",
+          "recursos": "Sistema WMS"
+        },
+        {
+          "num": 3,
+          "nome": "Organização de carga",
+          "tempo": 15,
+          "descricao": "Agrupamento por destino, peso, fragilidade e características",
+          "responsavel": "Auxiliar de armazém",
+          "recursos": "Balança, etiquetas"
+        },
+        {
+          "num": 4,
+          "nome": "Aplicação de identificadores",
+          "tempo": 10,
+          "descricao": "Etiquetas de localização, data, lote, código de barras",
+          "responsavel": "Auxiliar de armazém",
+          "recursos": "Impressora etiquetas"
+        },
+        {
+          "num": 5,
+          "nome": "Preparação de equipamentos",
+          "tempo": 8,
+          "descricao": "Seleção de empilhadeira, paletes, suportes conforme tipo de carga",
+          "responsavel": "Operador de empilhadeira",
+          "recursos": "Empilhadeira, paletes, acessórios"
+        },
+        {
+          "num": 6,
+          "nome": "Conferência pré-armazenagem",
+          "tempo": 12,
+          "descricao": "Verificação final de integridade, identificação e documentação",
+          "responsavel": "Supervisor de armazém",
+          "recursos": "Prancheta, checklist"
+        },
+        {
+          "num": 7,
+          "nome": "Apontamento no WMS",
+          "tempo": 8,
+          "descricao": "Confirmação de preparação no sistema via terminal RF",
+          "responsavel": "Operador de armazém",
+          "recursos": "Terminal RF"
+        },
+        {
+          "num": 8,
+          "nome": "Autorização para armazenagem",
+          "tempo": 4,
+          "descricao": "Liberação final para movimentação pelo supervisor",
+          "responsavel": "Supervisor de armazém",
+          "recursos": "Sistema autorização"
+        }
+      ],
+      "checklist": [
+        {
+          "secao": "ORDENS E RECEBIMENTO",
+          "itens": [
+            {
+              "id": "OR1",
+              "item": "Ordem de put away recebida no terminal RF",
+              "critico": true
+            },
+            {
+              "id": "OR2",
+              "item": "Todos os itens de recebimento conferem com ordem",
+              "critico": true
+            }
+          ]
+        },
+        {
+          "secao": "ORGANIZAÇÃO",
+          "itens": [
+            {
+              "id": "OG1",
+              "item": "Materiais agrupados por tipo/categoria corretamente",
+              "critico": false
+            },
+            {
+              "id": "OG2",
+              "item": "Paletes preparadas conforme especificação técnica",
+              "critico": true
+            },
+            {
+              "id": "OG3",
+              "item": "Etiquetas de localização aplicadas corretamente",
+              "critico": false
+            }
+          ]
+        },
+        {
+          "secao": "EQUIPAMENTOS",
+          "itens": [
+            {
+              "id": "EQ1",
+              "item": "Empilhadeira apropriada selecionada",
+              "critico": true
+            },
+            {
+              "id": "EQ2",
+              "item": "Suportes e acessórios verificados e adequados",
+              "critico": false
+            }
+          ]
+        },
+        {
+          "secao": "AUTORIZAÇÃO",
+          "itens": [
+            {
+              "id": "AU1",
+              "item": "Documento revisado por supervisor de armazém",
+              "critico": true
+            },
+            {
+              "id": "AU2",
+              "item": "Liberação concedida no WMS",
+              "critico": true
+            },
+            {
+              "id": "AU3",
+              "item": "Operador confirmou recebimento de autorização",
+              "critico": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "codigo": "PROC_003",
+      "titulo": "Armazenagem",
+      "tempo_total_minutos": 120,
+      "tempo_total_horas_minutos": "2h",
+      "descricao": "Armazenagem eficiente e otimizada dos materiais no sistema porta-paletes",
+      "cor": "#28a745",
+      "icone": "📦",
+      "etapas": [
+        {
+          "num": 1,
+          "nome": "Leitura de ordem de armazenagem",
+          "tempo": 3,
+          "descricao": "Confirmação via RF/tablet do destino final no armazém",
+          "responsavel": "Operador de empilhadeira",
+          "recursos": "Terminal RF"
+        },
+        {
+          "num": 2,
+          "nome": "Roteirização interna",
+          "tempo": 7,
+          "descricao": "Planejamento de rota eficiente dentro do armazém",
+          "responsavel": "Operador de empilhadeira",
+          "recursos": "Mapa armazém, WMS"
+        },
+        {
+          "num": 3,
+          "nome": "Movimentação interna",
+          "tempo": 40,
+          "descricao": "Transporte do item para local de armazenagem",
+          "responsavel": "Operador de empilhadeira",
+          "recursos": "Empilhadeira"
+        },
+        {
+          "num": 4,
+          "nome": "Posicionamento na localização",
+          "tempo": 35,
+          "descricao": "Acomodação segura, empilhamento correto conforme padrão",
+          "responsavel": "Operador de empilhadeira",
+          "recursos": "Equipamento segurança"
+        },
+        {
+          "num": 5,
+          "nome": "Confirmação de localização",
+          "tempo": 8,
+          "descricao": "Leitura código de barras do endereço no terminal RF",
+          "responsavel": "Operador de empilhadeira",
+          "recursos": "Terminal RF, código barras"
+        },
+        {
+          "num": 6,
+          "nome": "Atualização de saldo",
+          "tempo": 5,
+          "descricao": "Confirmação no WMS da quantidade e localização final",
+          "responsavel": "Operador de empilhadeira",
+          "recursos": "Sistema WMS"
+        },
+        {
+          "num": 7,
+          "nome": "Fotografia/Auditoria",
+          "tempo": 15,
+          "descricao": "Registro fotográfico para auditoria (amostral 10%)",
+          "responsavel": "Supervisor de armazém",
+          "recursos": "Câmera/celular"
+        },
+        {
+          "num": 8,
+          "nome": "Encerramento",
+          "tempo": 7,
+          "descricao": "Finalização no sistema, liberação para vendas",
+          "responsavel": "Supervisor de armazém",
+          "recursos": "Sistema WMS"
+        }
+      ],
+      "checklist": [
+        {
+          "secao": "MOVIMENTAÇÃO",
+          "itens": [
+            {
+              "id": "MV1",
+              "item": "Ordem lida e confirmada no terminal RF",
+              "critico": true
+            },
+            {
+              "id": "MV2",
+              "item": "Rota otimizada para reduzir distância e tempo",
+              "critico": false
+            },
+            {
+              "id": "MV3",
+              "item": "Equipamento apropriado selecionado",
+              "critico": true
+            }
+          ]
+        },
+        {
+          "secao": "POSICIONAMENTO",
+          "itens": [
+            {
+              "id": "PS1",
+              "item": "Localização conferida antes de armazenar",
+              "critico": true
+            },
+            {
+              "id": "PS2",
+              "item": "Carga posicionada com segurança máxima",
+              "critico": true
+            }
+          ]
+        },
+        {
+          "secao": "CONFIRMAÇÃO",
+          "itens": [
+            {
+              "id": "CF1",
+              "item": "Código barras da localização lido no RF",
+              "critico": true
+            },
+            {
+              "id": "CF2",
+              "item": "Quantidade confirmada no WMS em tempo real",
+              "critico": true
+            }
+          ]
+        },
+        {
+          "secao": "AUDITORIA",
+          "itens": [
+            {
+              "id": "AD1",
+              "item": "Foto da carga armazenada (amostral 10%)",
+              "critico": false
+            },
+            {
+              "id": "AD2",
+              "item": "Sistema finalizado com sucesso",
+              "critico": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "codigo": "PROC_004",
+      "titulo": "Separação de Materiais (Picking)",
+      "tempo_total_minutos": 155,
+      "tempo_total_horas_minutos": "2h35min",
+      "descricao": "Processo de separação de pedidos para expedição (picking otimizado)",
+      "cor": "#dc3545",
+      "icone": "🚚",
+      "etapas": [
+        {
+          "num": 1,
+          "nome": "Recebimento de ordem de venda",
+          "tempo": 5,
+          "descricao": "Download de pedido no terminal RF, leitura de SKUs e quantidades",
+          "responsavel": "Operador de picking",
+          "recursos": "Terminal RF"
+        },
+        {
+          "num": 2,
+          "nome": "Otimização de rota de picking",
+          "tempo": 8,
+          "descricao": "Sequenciamento eficiente de endereços (algoritmo WMS)",
+          "responsavel": "Sistema/Operador",
+          "recursos": "Sistema WMS"
+        },
+        {
+          "num": 3,
+          "nome": "Movimentação para primeira localização",
+          "tempo": 15,
+          "descricao": "Deslocamento eficiente no armazém",
+          "responsavel": "Operador de picking",
+          "recursos": "Carrinho picking"
+        },
+        {
+          "num": 4,
+          "nome": "Picking de itens",
+          "tempo": 85,
+          "descricao": "Coleta de itens conforme quantidade pedida em cada localização",
+          "responsavel": "Operador de picking",
+          "recursos": "Coletor, código de barras"
+        },
+        {
+          "num": 5,
+          "nome": "Conferência de picking",
+          "tempo": 18,
+          "descricao": "Verificação de quantidade e código correto por operador independente",
+          "responsavel": "Conferente de picking",
+          "recursos": "Coletor, código de barras"
+        },
+        {
+          "num": 6,
+          "nome": "Embalagem/Unitização",
+          "tempo": 12,
+          "descricao": "Agrupamento em caixa/palete conforme pedido",
+          "responsavel": "Auxiliar de expedição",
+          "recursos": "Caixas, paletes, filme stretch"
+        },
+        {
+          "num": 7,
+          "nome": "Aplicação de rótulo de expedição",
+          "tempo": 8,
+          "descricao": "Etiqueta com destinatário, código, número tracking",
+          "responsavel": "Auxiliar de expedição",
+          "recursos": "Impressora etiquetas"
+        },
+        {
+          "num": 8,
+          "nome": "Movimentação para zona de expedição",
+          "tempo": 4,
+          "descricao": "Transporte para área de saída",
+          "responsavel": "Operador de empilhadeira",
+          "recursos": "Empilhadeira"
+        }
+      ],
+      "checklist": [
+        {
+          "secao": "RECEBIMENTO",
+          "itens": [
+            {
+              "id": "RC1",
+              "item": "Ordem de venda recebida no terminal RF",
+              "critico": true
+            },
+            {
+              "id": "RC2",
+              "item": "Todos os SKUs carregados corretamente no sistema",
+              "critico": true
+            }
+          ]
+        },
+        {
+          "secao": "PICKING",
+          "itens": [
+            {
+              "id": "PK1",
+              "item": "Rota otimizada consultada no terminal",
+              "critico": false
+            },
+            {
+              "id": "PK2",
+              "item": "Cada localização visitada uma única vez",
+              "critico": true
+            },
+            {
+              "id": "PK3",
+              "item": "Quantidade correta separada por SKU",
+              "critico": true
+            }
+          ]
+        },
+        {
+          "secao": "CONFERÊNCIA",
+          "itens": [
+            {
+              "id": "CF1",
+              "item": "Código de barras conferido vs nota de pedido",
+              "critico": true
+            },
+            {
+              "id": "CF2",
+              "item": "Quantidade confere exatamente com pedido",
+              "critico": true
+            }
+          ]
+        },
+        {
+          "secao": "EMBALAGEM",
+          "itens": [
+            {
+              "id": "EB1",
+              "item": "Materiais agrupados por pedido",
+              "critico": true
+            },
+            {
+              "id": "EB2",
+              "item": "Embalagem apropriada utilizada",
+              "critico": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "codigo": "PROC_005",
+      "titulo": "Expedição",
+      "tempo_total_minutos": 135,
+      "tempo_total_horas_minutos": "2h15min",
+      "descricao": "Preparação e envio de materiais para clientes finais",
+      "cor": "#6f42c1",
+      "icone": "📈",
+      "etapas": [
+        {
+          "num": 1,
+          "nome": "Recebimento de pedidos para expedição",
+          "tempo": 5,
+          "descricao": "Listagem de pedidos a despachar do dia",
+          "responsavel": "Supervisor de expedição",
+          "recursos": "Sistema WMS"
+        },
+        {
+          "num": 2,
+          "nome": "Conferência documental",
+          "tempo": 10,
+          "descricao": "Verificação de NF, dados cliente, endereço correto",
+          "responsavel": "Assistente de expedição",
+          "recursos": "Documentos, computador"
+        },
+        {
+          "num": 3,
+          "nome": "Agrupamento de pedidos",
+          "tempo": 12,
+          "descricao": "Organização por destino geográfico, transportadora, rota",
+          "responsavel": "Operador de expedição",
+          "recursos": "Prancheta, mapa rotas"
+        },
+        {
+          "num": 4,
+          "nome": "Conferência final vs. pedido",
+          "tempo": 25,
+          "descricao": "Verificação quantidade, SKU, integridade dos itens",
+          "responsavel": "Conferente de expedição",
+          "recursos": "Código barras, prancheta"
+        },
+        {
+          "num": 5,
+          "nome": "Geração de documento de saída",
+          "tempo": 8,
+          "descricao": "Romaneio, manifesto, CTRC/CT-e",
+          "responsavel": "Assistente de expedição",
+          "recursos": "Impressora, sistema"
+        },
+        {
+          "num": 6,
+          "nome": "Embalagem final/proteção",
+          "tempo": 20,
+          "descricao": "Proteção adicional, material de amortecimento",
+          "responsavel": "Operador de expedição",
+          "recursos": "Materiais proteção"
+        },
+        {
+          "num": 7,
+          "nome": "Posicionamento para carga",
+          "tempo": 15,
+          "descricao": "Organização na zona de carga, sequência veículo",
+          "responsavel": "Operador de empilhadeira",
+          "recursos": "Empilhadeira"
+        },
+        {
+          "num": 8,
+          "nome": "Carregamento no veículo",
+          "tempo": 28,
+          "descricao": "Movimentação para caminhão, fixação de carga",
+          "responsavel": "Operador de empilhadeira + motorista",
+          "recursos": "Empilhadeira, correias"
+        },
+        {
+          "num": 9,
+          "nome": "Fechamento e lacre",
+          "tempo": 6,
+          "descricao": "Fechamento do baú, colocação de lacre, assinatura",
+          "responsavel": "Supervisor de expedição",
+          "recursos": "Lacre, câmera"
+        },
+        {
+          "num": 10,
+          "nome": "Registro de saída",
+          "tempo": 6,
+          "descricao": "Atualização no WMS/ERP, rastreamento, hora saída",
+          "responsavel": "Assistente de expedição",
+          "recursos": "Sistema WMS"
+        }
+      ],
+      "checklist": [
+        {
+          "secao": "RECEBIMENTO E CONFERÊNCIA",
+          "itens": [
+            {
+              "id": "REC1",
+              "item": "Todos os pedidos listados chegaram na expedição",
+              "critico": true
+            },
+            {
+              "id": "REC2",
+              "item": "Documentação completa (NF, cliente, endereço)",
+              "critico": true
+            }
+          ]
+        },
+        {
+          "secao": "PREPARAÇÃO",
+          "itens": [
+            {
+              "id": "PREP1",
+              "item": "Pedidos agrupados por rota/transportadora",
+              "critico": false
+            },
+            {
+              "id": "PREP2",
+              "item": "Cálculo de frete realizado corretamente",
+              "critico": true
+            },
+            {
+              "id": "PREP3",
+              "item": "Documento de saída gerado e validado",
+              "critico": true
+            }
+          ]
+        },
+        {
+          "secao": "EMBALAGEM",
+          "itens": [
+            {
+              "id": "EMB1",
+              "item": "Quantidade final conferida vs pedido",
+              "critico": true
+            },
+            {
+              "id": "EMB2",
+              "item": "Materiais de proteção aplicados adequadamente",
+              "critico": false
+            }
+          ]
+        },
+        {
+          "secao": "CARGA E SAÍDA",
+          "itens": [
+            {
+              "id": "CSA1",
+              "item": "Veículo apropriado selecionado",
+              "critico": false
+            },
+            {
+              "id": "CSA2",
+              "item": "Carga arrumada com segurança máxima",
+              "critico": true
+            },
+            {
+              "id": "CSA3",
+              "item": "Lacre aplicado e fotografado",
+              "critico": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

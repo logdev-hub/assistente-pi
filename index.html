@@ -1,0 +1,2074 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Implementação Prática do PI - UC2 - DistribuidoraTech Brasil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+:root {
+  --color-white: rgba(255, 255, 255, 1);
+  --color-black: rgba(0, 0, 0, 1);
+  --color-cream-50: rgba(252, 252, 249, 1);
+  --color-cream-100: rgba(255, 255, 253, 1);
+  --color-gray-200: rgba(245, 245, 245, 1);
+  --color-gray-300: rgba(167, 169, 169, 1);
+  --color-gray-400: rgba(119, 124, 124, 1);
+  --color-slate-500: rgba(98, 108, 113, 1);
+  --color-brown-600: rgba(94, 82, 64, 1);
+  --color-charcoal-700: rgba(31, 33, 33, 1);
+  --color-charcoal-800: rgba(38, 40, 40, 1);
+  --color-slate-900: rgba(19, 52, 59, 1);
+  --color-teal-300: rgba(50, 184, 198, 1);
+  --color-teal-400: rgba(45, 166, 178, 1);
+  --color-teal-500: rgba(33, 128, 141, 1);
+  --color-teal-600: rgba(29, 116, 128, 1);
+  --color-teal-700: rgba(26, 104, 115, 1);
+  --color-teal-800: rgba(41, 150, 161, 1);
+  --color-red-400: rgba(255, 84, 89, 1);
+  --color-red-500: rgba(192, 21, 47, 1);
+  --color-orange-400: rgba(230, 129, 97, 1);
+  --color-orange-500: rgba(168, 75, 47, 1);
+  --color-brown-600-rgb: 94, 82, 64;
+  --color-teal-500-rgb: 33, 128, 141;
+  --color-slate-900-rgb: 19, 52, 59;
+  --color-slate-500-rgb: 98, 108, 113;
+  --color-red-500-rgb: 192, 21, 47;
+  --color-red-400-rgb: 255, 84, 89;
+  --color-orange-500-rgb: 168, 75, 47;
+  --color-orange-400-rgb: 230, 129, 97;
+  --color-bg-1: rgba(59, 130, 246, 0.08);
+  --color-bg-2: rgba(245, 158, 11, 0.08);
+  --color-bg-3: rgba(34, 197, 94, 0.08);
+  --color-bg-4: rgba(239, 68, 68, 0.08);
+  --color-bg-5: rgba(147, 51, 234, 0.08);
+  --color-bg-6: rgba(249, 115, 22, 0.08);
+  --color-bg-7: rgba(236, 72, 153, 0.08);
+  --color-bg-8: rgba(6, 182, 212, 0.08);
+  --color-background: var(--color-cream-50);
+  --color-surface: var(--color-cream-100);
+  --color-text: var(--color-slate-900);
+  --color-text-secondary: var(--color-slate-500);
+  --color-primary: var(--color-teal-500);
+  --color-primary-hover: var(--color-teal-600);
+  --color-primary-active: var(--color-teal-700);
+  --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
+  --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
+  --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+  --color-btn-primary-text: var(--color-cream-50);
+  --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-card-border-inner: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-error: var(--color-red-500);
+  --color-success: var(--color-teal-500);
+  --color-warning: var(--color-orange-500);
+  --color-info: var(--color-slate-500);
+  --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
+  --color-select-caret: rgba(var(--color-slate-900-rgb), 0.8);
+  --font-family-base: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-size-base: 14px;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 550;
+  --font-weight-bold: 600;
+  --space-8: 8px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --radius-base: 8px;
+  --radius-lg: 12px;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-gray-400-rgb: 119, 124, 124;
+    --color-teal-300-rgb: 50, 184, 198;
+    --color-gray-300-rgb: 167, 169, 169;
+    --color-gray-200-rgb: 245, 245, 245;
+    --color-bg-1: rgba(29, 78, 216, 0.15);
+    --color-bg-2: rgba(180, 83, 9, 0.15);
+    --color-bg-3: rgba(21, 128, 61, 0.15);
+    --color-bg-4: rgba(185, 28, 28, 0.15);
+    --color-bg-5: rgba(107, 33, 168, 0.15);
+    --color-bg-6: rgba(194, 65, 12, 0.15);
+    --color-bg-7: rgba(190, 24, 93, 0.15);
+    --color-bg-8: rgba(8, 145, 178, 0.15);
+    --color-background: var(--color-charcoal-700);
+    --color-surface: var(--color-charcoal-800);
+    --color-text: var(--color-gray-200);
+    --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+    --color-primary: var(--color-teal-300);
+    --color-primary-hover: var(--color-teal-400);
+    --color-primary-active: var(--color-teal-800);
+    --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
+    --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
+    --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+    --color-error: var(--color-red-400);
+    --color-success: var(--color-teal-300);
+    --color-warning: var(--color-orange-400);
+    --color-info: var(--color-gray-300);
+    --color-btn-primary-text: var(--color-slate-900);
+    --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
+    --color-card-border-inner: rgba(var(--color-gray-400-rgb), 0.15);
+  }
+}
+
+body {
+    font-family: var(--font-family-base);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.6;
+}
+
+.navbar {
+    background: linear-gradient(135deg, #0056b3 0%, #003d82 100%);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: white !important;
+}
+
+.nav-link {
+    color: rgba(255,255,255,0.9) !important;
+    transition: color 0.3s;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    color: #ffc107 !important;
+}
+
+.nav-link.active {
+    color: #ffc107 !important;
+    font-weight: 600;
+}
+
+.hero-section {
+    background: linear-gradient(135deg, #0056b3 0%, #007bff 100%);
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.hero-section h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.hero-section p {
+    font-size: 1.2rem;
+    opacity: 0.95;
+}
+
+.section-header {
+    background: var(--color-bg-1);
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    margin-bottom: 2rem;
+    border-left: 5px solid var(--color-primary);
+}
+
+.section-header h2 {
+    color: var(--color-primary);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+}
+
+.section-header p {
+    color: var(--color-text-secondary);
+    margin: 0;
+    font-size: 1.05rem;
+}
+
+.card {
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    background-color: var(--color-surface);
+    margin-bottom: 1.5rem;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    background: var(--color-bg-2);
+    border-bottom: 2px solid var(--color-card-border);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.nav-card {
+    cursor: pointer;
+    height: 100%;
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+.nav-card .emoji {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.nav-card h5 {
+    color: var(--color-primary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.badge-classe-a {
+    background-color: #dc3545;
+    color: white;
+    font-weight: 600;
+}
+
+.badge-classe-b {
+    background-color: #ffc107;
+    color: #333;
+    font-weight: 600;
+}
+
+.badge-classe-c {
+    background-color: #28a745;
+    color: white;
+    font-weight: 600;
+}
+
+.kpi-card {
+    border-left: 4px solid var(--color-primary);
+    padding: 1.5rem;
+    height: 100%;
+}
+
+.kpi-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0.5rem 0;
+}
+
+.kpi-meta {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+}
+
+.processo-step {
+    position: relative;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: var(--radius-base);
+    background: var(--color-surface);
+    border: 2px solid var(--color-card-border);
+    transition: all 0.3s;
+}
+
+.processo-step:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.processo-step::after {
+    content: '↓';
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    color: var(--color-primary);
+}
+
+.processo-step:last-child::after {
+    content: '';
+}
+
+.step-number {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: var(--color-primary);
+    color: white;
+    border-radius: 50%;
+    font-weight: 700;
+    margin-right: 1rem;
+}
+
+.formula {
+    background: var(--color-bg-5);
+    padding: 1rem;
+    border-radius: var(--radius-base);
+    font-family: var(--font-family-mono);
+    font-size: 1rem;
+    border-left: 4px solid var(--color-primary);
+    margin: 1rem 0;
+}
+
+.calculo-card {
+    background: var(--color-bg-3);
+    border: 2px solid #28a745;
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    margin-bottom: 2rem;
+}
+
+.resultado {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #28a745;
+    margin: 1rem 0;
+}
+
+.table {
+    background: var(--color-surface);
+    color: var(--color-text);
+}
+
+.table thead {
+    background: var(--color-primary);
+    color: white;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: var(--color-bg-1);
+}
+
+.supply-chain-diagram {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    background: var(--color-bg-2);
+    border-radius: var(--radius-lg);
+    margin: 2rem 0;
+}
+
+#skuTabs .nav-link {
+    color: var(--color-text);
+    font-weight: 600;
+    padding: 1rem 1.5rem;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+}
+
+#skuTabs .nav-link:hover {
+    background: var(--color-bg-1);
+    border-color: var(--color-border);
+}
+
+#skuTabs .nav-link.active {
+    background: var(--color-surface);
+    border-color: var(--color-primary);
+    border-bottom-color: var(--color-surface);
+    color: var(--color-primary);
+}
+
+.supply-level {
+    flex: 1;
+    text-align: center;
+    padding: 1rem;
+}
+
+.supply-arrow {
+    font-size: 3rem;
+    color: var(--color-primary);
+    margin: 0 1rem;
+}
+
+.fornecedor-rank-1 {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    border: 3px solid #ffa500;
+    font-weight: 700;
+}
+
+.progress-bar {
+    background-color: var(--color-primary);
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: all 0.3s;
+    display: none;
+    z-index: 1000;
+}
+
+.back-to-top:hover {
+    background: var(--color-primary-hover);
+    transform: translateY(-3px);
+}
+
+.footer {
+    background: #343a40;
+    color: white;
+    padding: 2rem 0;
+    margin-top: 4rem;
+}
+
+.section-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 2px solid var(--color-border);
+}
+
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+    
+    .supply-chain-diagram {
+        flex-direction: column;
+    }
+    
+    .supply-arrow {
+        transform: rotate(90deg);
+        margin: 1rem 0;
+    }
+    
+    .nav-card {
+        margin-bottom: 1rem;
+    }
+}
+
+.info-item {
+    margin-bottom: 1rem;
+    padding: 0.8rem;
+    background: var(--color-bg-1);
+    border-radius: var(--radius-base);
+    border-left: 3px solid var(--color-primary);
+}
+
+.info-label {
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-right: 0.5rem;
+}
+
+.supplier-card, .client-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: var(--radius-base);
+    border: 2px solid var(--color-card-border);
+    background: var(--color-surface);
+}
+
+.supplier-card {
+    border-left: 4px solid #007bff;
+}
+
+.client-card {
+    border-left: 4px solid #28a745;
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- Navegação Fixa -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">📦 DistribuidoraTech Brasil</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#secao1">1. Empresa</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#secao2">2. Cadeia</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#secao3">3. Fornecedores</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#secao4">4. Processos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#secao5">5. Estoques</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#secao6">6. Capacidades</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <h1>🎯 Implementação Prática do PI - UC2</h1>
+            <p class="lead">DistribuidoraTech Brasil - Análise Operacional Integrada</p>
+            <p>Projeto de implementação logística completo com processos, custos e análise de capacidades</p>
+        </div>
+    </section>
+
+    <!-- Cards de Navegação Rápida -->
+    <div class="container my-5">
+        <h3 class="text-center mb-4" style="color: var(--color-primary); font-weight: 700;">📋 Navegação Rápida</h3>
+        <div class="row g-3">
+            <div class="col-md-3 col-sm-6">
+                <div class="card nav-card" onclick="scrollToSection('secao1')">
+                    <span class="emoji">🏢</span>
+                    <h5>Empresa-Modelo</h5>
+                    <p class="text-muted small">Perfil e características</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card nav-card" onclick="scrollToSection('secao2')">
+                    <span class="emoji">🔗</span>
+                    <h5>Cadeia de Suprimentos</h5>
+                    <p class="text-muted small">Fluxos montante/jusante</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card nav-card" onclick="scrollToSection('secao3')">
+                    <span class="emoji">🤝</span>
+                    <h5>Fornecedores</h5>
+                    <p class="text-muted small">Tipos de mercado</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card nav-card" onclick="scrollToSection('secao4')">
+                    <span class="emoji">🔄</span>
+                    <h5>Processos Logísticos</h5>
+                    <p class="text-muted small">5 fluxos operacionais</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card nav-card" onclick="scrollToSection('secao5')">
+                    <span class="emoji">📦</span>
+                    <h5>Gestão de Estoques</h5>
+                    <p class="text-muted small">Custos e parâmetros</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card nav-card" onclick="scrollToSection('secao6')">
+                    <span class="emoji">⚙️</span>
+                    <h5>Capacidades OEE</h5>
+                    <p class="text-muted small">Eficiência operacional</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card nav-card" onclick="window.print()">
+                    <span class="emoji">🖨️</span>
+                    <h5>Imprimir</h5>
+                    <p class="text-muted small">Gerar relatório</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEÇÃO 1: EMPRESA-MODELO -->
+    <section id="secao1" class="container my-5">
+        <div class="section-header">
+            <h2>🏢 Seção 1: Definição da Empresa-Modelo</h2>
+            <p>Caracterização completa da empresa objeto do estudo logístico</p>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <strong>📋 Perfil da Empresa</strong>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <span class="info-label">🏷️ Nome:</span>
+                            <span>DistribuidoraTech Brasil</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">🔧 Tipo:</span>
+                            <span>Distribuidora de Componentes Eletrônicos</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">📏 Porte:</span>
+                            <span>Médio Porte</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <span class="info-label">💼 Segmento:</span>
+                            <span>Tecnologia e Eletrônicos</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">📍 Localização:</span>
+                            <span>São Paulo - SP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 p-3" style="background: var(--color-bg-2); border-radius: var(--radius-base);">
+                    <h5 style="color: var(--color-primary);">📝 Descrição Detalhada</h5>
+                    <p>A <strong>DistribuidoraTech Brasil</strong> é uma distribuidora especializada em componentes eletrônicos, peças de informática e acessórios tecnológicos. Atua como intermediária entre fabricantes internacionais/nacionais e o mercado varejista, além de atender integradores de sistemas e canais de e-commerce.</p>
+                    <p class="mb-0">Fundada em São Paulo, principal hub tecnológico do Brasil, a empresa possui infraestrutura logística moderna e foco em atendimento B2B e B2C, com portfólio diversificado de produtos de alta tecnologia.</p>
+                </div>
+
+                <div class="mt-4">
+                    <h5 style="color: var(--color-primary);">🎯 Justificativa da Escolha</h5>
+                    <ul>
+                        <li><strong>Complexidade Logística:</strong> Alto giro de produtos com diferentes características de armazenagem</li>
+                        <li><strong>Variedade de SKUs:</strong> Grande diversidade de itens com diferentes valores e volumes</li>
+                        <li><strong>Cadeia Internacional:</strong> Fornecedores globais exigem gestão avançada de lead times</li>
+                        <li><strong>Relevância do Setor:</strong> Segmento em crescimento no mercado brasileiro</li>
+                        <li><strong>Aplicabilidade:</strong> Permite demonstração prática de todos os conceitos logísticos estudados</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-nav">
+            <button class="btn btn-outline-secondary" onclick="scrollToSection('home')">⬆️ Voltar ao Início</button>
+            <button class="btn btn-primary" onclick="scrollToSection('secao2')">Próxima Seção ➡️</button>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 2: CADEIA DE SUPRIMENTOS -->
+    <section id="secao2" class="container my-5">
+        <div class="section-header">
+            <h2>🔗 Seção 2: Mapeamento da Cadeia de Suprimentos</h2>
+            <p>Identificação dos participantes e fluxos montante/jusante conforme conceitos das Aulas 1 e 2</p>
+        </div>
+
+        <!-- Diagrama Visual -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <strong>🔄 Fluxo da Cadeia de Suprimentos</strong>
+            </div>
+            <div class="card-body">
+                <div class="supply-chain-diagram">
+                    <div class="supply-level">
+                        <h5 style="color: #007bff;">⬅️ MONTANTE</h5>
+                        <p class="small text-muted">Fornecedores</p>
+                    </div>
+                    <div class="supply-arrow">→</div>
+                    <div class="supply-level">
+                        <h4 style="color: var(--color-primary); font-weight: 700;">🏢 EMPRESA FOCAL</h4>
+                        <p class="small">DistribuidoraTech</p>
+                    </div>
+                    <div class="supply-arrow">→</div>
+                    <div class="supply-level">
+                        <h5 style="color: #28a745;">JUSANTE ➡️</h5>
+                        <p class="small text-muted">Clientes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fornecedores (Montante) -->
+        <div class="card mb-4">
+            <div class="card-header" style="background: #e3f2fd;">
+                <strong>⬅️ MONTANTE: Fornecedores</strong>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="supplier-card">
+                            <h6 style="color: #007bff; font-weight: 600;">🌏 Taiwan Electronics</h6>
+                            <p class="small mb-1"><strong>Tipo:</strong> Fabricante Internacional</p>
+                            <p class="small mb-0"><strong>Produtos:</strong> Chips, processadores, memórias</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="supplier-card">
+                            <h6 style="color: #007bff; font-weight: 600;">🌐 Global Tech Importadora</h6>
+                            <p class="small mb-1"><strong>Tipo:</strong> Importador</p>
+                            <p class="small mb-0"><strong>Produtos:</strong> Componentes diversos</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="supplier-card">
+                            <h6 style="color: #007bff; font-weight: 600;">🇧🇷 CompBR Nacional</h6>
+                            <p class="small mb-1"><strong>Tipo:</strong> Fabricante Nacional</p>
+                            <p class="small mb-0"><strong>Produtos:</strong> Cabos, conectores, acessórios</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 p-3" style="background: var(--color-bg-1); border-radius: var(--radius-base);">
+                    <p class="mb-0"><strong>📌 Análise Montante:</strong> A DistribuidoraTech trabalha com mix de fornecedores internacionais e nacionais, garantindo competitividade de preços (importados) e agilidade de entrega (nacionais). Lead times variam de 3 dias (nacional) a 45 dias (internacional).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Clientes (Jusante) -->
+        <div class="card">
+            <div class="card-header" style="background: #e8f5e9;">
+                <strong>➡️ JUSANTE: Clientes</strong>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="client-card">
+                            <h6 style="color: #28a745; font-weight: 600;">🏪 Varejistas de Informática</h6>
+                            <p class="small mb-1"><strong>Tipo:</strong> Varejo B2B</p>
+                            <p class="small mb-0"><strong>Volume:</strong> <span class="badge bg-success">Alto</span></p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="client-card">
+                            <h6 style="color: #28a745; font-weight: 600;">🔧 Integradores de Sistemas</h6>
+                            <p class="small mb-1"><strong>Tipo:</strong> Serviços B2B</p>
+                            <p class="small mb-0"><strong>Volume:</strong> <span class="badge bg-warning text-dark">Médio</span></p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="client-card">
+                            <h6 style="color: #28a745; font-weight: 600;">🛒 Marketplace Online</h6>
+                            <p class="small mb-1"><strong>Tipo:</strong> E-commerce B2C</p>
+                            <p class="small mb-0"><strong>Volume:</strong> <span class="badge bg-success">Alto</span></p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="client-card">
+                            <h6 style="color: #28a745; font-weight: 600;">🏬 Pequenas Lojas</h6>
+                            <p class="small mb-1"><strong>Tipo:</strong> Varejo B2C</p>
+                            <p class="small mb-0"><strong>Volume:</strong> <span class="badge bg-secondary">Baixo</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 p-3" style="background: var(--color-bg-3); border-radius: var(--radius-base);">
+                    <p class="mb-0"><strong>📌 Análise Jusante:</strong> A estratégia omnichannel atende diferentes perfis de clientes. Varejistas e marketplaces representam 70% do volume, com pedidos recorrentes. Integradores demandam customização e suporte técnico. Pequenas lojas têm pedidos esporádicos mas margens maiores.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-nav">
+            <button class="btn btn-outline-secondary" onclick="scrollToSection('secao1')">⬅️ Seção Anterior</button>
+            <button class="btn btn-primary" onclick="scrollToSection('secao3')">Próxima Seção ➡️</button>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 3: SELEÇÃO DE FORNECEDORES COM TIPOS DE MERCADO -->
+    <section id="secao3" class="container my-5">
+        <div class="section-header">
+            <h2>🤝 Seção 3: Seleção de Fornecedores - Tipos de Mercado</h2>
+            <p>Matriz de critérios ponderados e análise por tipo de mercado (Oligopólio, Concorrência Perfeita, Monopólio)</p>
+        </div>
+
+        <!-- Critérios -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <strong>⚖️ Critérios de Avaliação e Pesos</strong>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Critério</th>
+                                <th class="text-center">Peso (%)</th>
+                                <th>Justificativa</th>
+                            </tr>
+                        </thead>
+                        <tbody id="criteriosTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tipos de Mercado - CARDS -->
+        <h4 class="mb-3" style="color: var(--color-primary);">🏛️ Tipos de Mercado e Fornecedores</h4>
+        
+        <div id="fornecedoresMercadoContainer"></div>
+
+        <!-- Matriz de Avaliação -->
+        <div class="card mb-4 mt-4">
+            <div class="card-header">
+                <strong>📊 Matriz de Avaliação de Fornecedores</strong>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Fornecedor</th>
+                                <th class="text-center">Preço<br><small>(30%)</small></th>
+                                <th class="text-center">Qualidade<br><small>(25%)</small></th>
+                                <th class="text-center">Prazo<br><small>(20%)</small></th>
+                                <th class="text-center">Capacidade<br><small>(10%)</small></th>
+                                <th class="text-center">Pagamento<br><small>(10%)</small></th>
+                                <th class="text-center">Certificações<br><small>(5%)</small></th>
+                                <th class="text-center"><strong>Total</strong></th>
+                                <th class="text-center">Ranking</th>
+                            </tr>
+                        </thead>
+                        <tbody id="avaliacaoTableBody"></tbody>
+                    </table>
+                </div>
+
+                <div class="mt-4 p-3 fornecedor-rank-1" style="border-radius: var(--radius-base);">
+                    <h5 class="text-center mb-0">🏆 Fornecedor Recomendado: <strong>CompBR Nacional (8.15 pontos)</strong></h5>
+                </div>
+
+                <div class="mt-3 p-3" style="background: var(--color-bg-1); border-radius: var(--radius-base);">
+                    <h6 style="color: var(--color-primary);">💡 Análise da Seleção</h6>
+                    <p><strong>CompBR Nacional</strong> apresenta a melhor pontuação geral (8.15) devido ao equilíbrio entre preço competitivo (nota 9), excelente prazo de entrega nacional (nota 9) e boas condições de pagamento (nota 9).</p>
+                    <p class="mb-0"><strong>Estratégia Recomendada:</strong> Manter mix de fornecedores - CompBR como principal para itens de giro rápido; Taiwan Electronics para produtos de alta tecnologia como backup estratégico.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-nav">
+            <button class="btn btn-outline-secondary" onclick="scrollToSection('secao2')">⬅️ Seção Anterior</button>
+            <button class="btn btn-primary" onclick="scrollToSection('secao4')">Próxima Seção ➡️</button>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 4: PROCESSOS LOGÍSTICOS - 5 FLUXOS -->
+    <section id="secao4" class="container my-5">
+        <div class="section-header">
+            <h2>🔄 Seção 4: Processos Logísticos Operacionais</h2>
+            <p>5 Fluxos com Quadros, Fluxogramas Visuais e Checklists Interativos</p>
+        </div>
+
+        <!-- TABS DOS PROCESSOS -->
+        <ul class="nav nav-tabs mb-4" id="processosTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="proc1-tab" data-bs-toggle="tab" data-bs-target="#proc1" type="button" role="tab">
+                    📥 Recebimento
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="proc2-tab" data-bs-toggle="tab" data-bs-target="#proc2" type="button" role="tab">
+                    📦 Preparação
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="proc3-tab" data-bs-toggle="tab" data-bs-target="#proc3" type="button" role="tab">
+                    🏭 Armazenagem
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="proc4-tab" data-bs-toggle="tab" data-bs-target="#proc4" type="button" role="tab">
+                    🔍 Separação
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="proc5-tab" data-bs-toggle="tab" data-bs-target="#proc5" type="button" role="tab">
+                    🚚 Expedição
+                </button>
+            </li>
+        </ul>
+
+        <!-- TAB CONTENT -->
+        <div class="tab-content" id="processosTabsContent"></div>
+
+        <div class="section-nav mt-4">
+            <button class="btn btn-outline-secondary" onclick="scrollToSection('secao3')">⬅️ Seção Anterior</button>
+            <button class="btn btn-primary" onclick="scrollToSection('secao5')">Próxima Seção ➡️</button>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 5: GESTÃO DE ESTOQUES -->
+    <section id="secao5" class="container my-5">
+        <div class="section-header">
+            <h2>📦 Seção 6: Gestão de Estoques — Parâmetros de Diferentes Classes</h2>
+            <p>Aplicação de LEC/EOQ, Estoque de Segurança e Ponto de Pedido para SKUs das Classes A, B e C (Aula 8)</p>
+        </div>
+
+        <div class="mb-4 p-3" style="background: var(--color-bg-2); border-radius: var(--radius-base);">
+            <h6 style="color: var(--color-primary);">🎯 Análise Comparativa de Três SKUs</h6>
+            <p class="mb-0">Comparação de parâmetros de gestão de estoques para produtos de diferentes classes ABC, demonstrando como a classificação impacta as políticas de reabastecimento.</p>
+        </div>
+
+        <!-- Tabs para SKUs -->
+        <ul class="nav nav-tabs mb-4" id="skuTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="sku1-tab" data-bs-toggle="tab" data-bs-target="#sku1" type="button" role="tab">
+                    <span class="badge badge-classe-a me-2">Classe A</span> SSD 1TB NVMe
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="sku2-tab" data-bs-toggle="tab" data-bs-target="#sku2" type="button" role="tab">
+                    <span class="badge badge-classe-b me-2">Classe B</span> Mouse Gamer
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="sku3-tab" data-bs-toggle="tab" data-bs-target="#sku3" type="button" role="tab">
+                    <span class="badge badge-classe-c me-2">Classe C</span> Cabo HDMI 2m
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="skuTabsContent">
+            <!-- SKU 1: SSD 1TB NVMe (Classe A) -->
+            <div class="tab-pane fade show active" id="sku1" role="tabpanel">
+                <div class="card mb-4" style="border: 3px solid #dc3545; background: var(--color-bg-4);">
+                    <div class="card-header" style="background: #dc3545; color: white;">
+                        <h4 class="mb-0">📦 SKU 1: SSD 1TB NVMe (P001) - <span class="badge bg-light text-dark">Classe A</span></h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <div class="info-item" style="background: rgba(255,255,255,0.7);">
+                                    <span class="info-label">Código:</span> P001
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="info-item" style="background: rgba(255,255,255,0.7);">
+                                    <span class="info-label">Classe ABC:</span> <span class="badge badge-classe-a">A</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="info-item" style="background: rgba(255,255,255,0.7);">
+                                    <span class="info-label">Faturamento Anual:</span> R$ 1.080.000
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Parâmetros de Demanda -->
+                        <div class="card mb-3">
+                            <div class="card-header" style="background: var(--color-bg-1);">
+                                <strong>📈 Parâmetros de Demanda</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li><strong>Demanda Anual:</strong> 2.400 unidades</li>
+                                            <li><strong>Demanda Diária Média:</strong> 6,67 unidades/dia</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li><strong>Desvio Padrão Diário:</strong> 2,5 unidades</li>
+                                            <li><strong>Coeficiente de Variação:</strong> 37,5%</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <p class="small mb-0 mt-2" style="background: var(--color-bg-2); padding: 0.5rem; border-radius: 6px;">
+                                    <strong>📝 Comentário:</strong> Produto de Classe A com demanda estável
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Parâmetros de Custo -->
+                        <div class="card mb-3">
+                            <div class="card-header" style="background: var(--color-bg-2);">
+                                <strong>💰 Parâmetros de Custo</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li><strong>Preço Unitário:</strong> R$ 450,00</li>
+                                            <li><strong>Custo Anual Armazenagem:</strong> 20% (R$ 90,00/unidade)</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li><strong>Custo Fixo do Pedido:</strong> R$ 250,00</li>
+                                            <li><strong>Custo Médio de Estoque:</strong> R$ 59.040,00</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Parâmetros de Lead Time -->
+                        <div class="card mb-3">
+                            <div class="card-header" style="background: var(--color-bg-3);">
+                                <strong>⏱️ Parâmetros de Lead Time</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li><strong>Lead Time Médio:</strong> 15 dias</li>
+                                            <li><strong>Lead Time Mínimo:</strong> 10 dias</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li><strong>Lead Time Máximo:</strong> 25 dias</li>
+                                            <li><strong>Variação:</strong> ±10 dias</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cálculos de Parâmetros de Estoque -->
+                        <div class="card mb-3" style="border: 2px solid #28a745;">
+                            <div class="card-header" style="background: #28a745; color: white;">
+                                <strong>🧮 Cálculos de Parâmetros de Estoque</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="row text-center mb-3">
+                                    <div class="col-md-3">
+                                        <h3 style="color: #28a745; margin: 0;">115</h3>
+                                        <p class="small mb-0"><strong>Lote Econômico (LEC)</strong></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h3 style="color: #28a745; margin: 0;">20,8</h3>
+                                        <p class="small mb-0"><strong>Pedidos/Ano</strong></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h3 style="color: #28a745; margin: 0;">17</h3>
+                                        <p class="small mb-0"><strong>Intervalo (dias)</strong></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h3 style="color: #28a745; margin: 0;">16</h3>
+                                        <p class="small mb-0"><strong>Estoque de Segurança</strong></p>
+                                    </div>
+                                </div>
+                                <div class="row text-center">
+                                    <div class="col-md-3">
+                                        <h3 style="color: #dc3545; margin: 0;">16</h3>
+                                        <p class="small mb-0"><strong>Estoque Mínimo</strong></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h3 style="color: #dc3545; margin: 0;">116</h3>
+                                        <p class="small mb-0"><strong>Ponto de Pedido (ROP)</strong></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h3 style="color: #007bff; margin: 0;">231</h3>
+                                        <p class="small mb-0"><strong>Estoque Máximo</strong></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h3 style="color: #007bff; margin: 0;">95%</h3>
+                                        <p class="small mb-0"><strong>Nível de Serviço</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Gestão Operacional -->
+                        <div class="card">
+                            <div class="card-header" style="background: var(--color-bg-5);">
+                                <strong>⚙️ Gestão Operacional</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="info-item">
+                                            <span class="info-label">Revisão de Estoque:</span> Diária
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="info-item">
+                                            <span class="info-label">Localização:</span> Porta-paletes nível 1-3
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="info-item">
+                                            <span class="info-label">Giro Anual:</span> 2,1 vezes
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SKU 2: Mouse Gamer (Classe B) -->
+            <div class="tab-pane fade" id="sku2" role="tabpanel">
+                <div class="card mb-4" style="border: 3px solid #ffc107; background: var(--color-bg-2);">
+                    <div class="card-header" style="background: #ffc107; color: #333;">
+                        <h4 class="mb-0">🖌️ SKU 2: Mouse Gamer (P011) - <span class="badge bg-dark">Classe B</span></h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <div class="info-item" style="background: rgba(255,255,255,0.7);">
+                                    <span class="info-label">Código:</span> P011
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="info-item" style="background: rgba(255,255,255,0.7);">
+                                    <span class="info-label">Classe ABC:</span> <span class="badge badge-classe-b">B</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="info-item" style="background: rgba(255,255,255,0.7);">
+                                    <span class="info-label">Faturamento Anual:</span> R$ 432.000
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Parâmetros de Demanda -->
+                        <div class="card mb-3">
+                            <div class="card-header" style="background: var(--color-bg-1);">
+                                <strong>📈 Parâmetros de Demanda</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li><strong>Demanda Anual:</strong> 2.400 unidades</li>
+                                            <li><strong>Demanda Diária Média:</strong> 6,67 unidades/dia</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li><strong>Desvio Padrão Diário:</strong> 1,8 unidades</li>
+                                            <li><strong>Coeficiente de Variação:</strong> 27,0%</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <p class="small mb-0 mt-2" style="background: var(--color-bg-2); padding: 0.5rem; border-radius: 6px;">
+                                    <strong>📝 Comentário:</strong> Produto de Classe B com demanda moderada
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Parâmetros de Custo -->
+                        <div class="card mb-3">
+                            <div class="card-header" style="background: var(--color-bg-2);">
+                                <strong>💰 Parâmetros de Custo</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li><strong>Preço Unitário:</strong> R$ 180,00</li>
+                                            <li><strong>Custo Anual Armazenagem:</strong> 20% (R$ 36,00/unidade)</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li><strong>Custo Fixo do Pedido:</strong> R$ 200,00</li>
+                                            <li><strong>Custo Médio de Estoque:</strong> R$ 22.320,00</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Parâmetros de Lead Time -->
+                        <div class="card mb-3">
+                            <div class="card-header" style="background: var(--color-bg-3);">
+                                <strong>⏱️ Parâmetros de Lead Time</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li><strong>Lead Time Médio:</strong> 20 dias</li>
+                                            <li><strong>Lead Time Mínimo:</strong> 15 dias</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li><strong>Lead Time Máximo:</strong> 30 dias</li>
+                                            <li><strong>Variação:</strong> ±15 dias</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cálculos de Parâmetros de Estoque -->
+                        <div class="card mb-3" style="border: 2px solid #28a745;">
+                            <div class="card-header" style="background: #28a745; color: white;">
+                                <strong>🧮 Cálculos de Parâmetros de Estoque</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="row text-center mb-3">
+                                    <div class="col-md-3">
+                                        <h3 style="color: #28a745; margin: 0;">92</h3>
+                                        <p class="small mb-0"><strong>Lote Econômico (LEC)</strong></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h3 style="color: #28a745; margin: 0;">26,1</h3>
+                                        <p class="small mb-0"><strong>Pedidos/Ano</strong></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h3 style="color: #28a745; margin: 0;">14</h3>
+                                        <p class="small mb-0"><strong>Intervalo (dias)</strong></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h3 style="color: #28a745; margin: 0;">12</h3>
+                                        <p class="small mb-0"><strong>Estoque de Segurança</strong></p>
+                                    </div>
+                                </div>
+                                <div class="row text-center">
+                                    <div class="col-md-3">
+                                        <h3 style="color: #dc3545; margin: 0;">12</h3>
+                                        <p class="small mb-0"><strong>Estoque Mínimo</strong></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h3 style="color: #dc3545; margin: 0;">145</h3>
+                                        <p class="small mb-0"><strong>Ponto de Pedido (ROP)</strong></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h3 style="color: #007bff; margin: 0;">237</h3>
+                                        <p class="small mb-0"><strong>Estoque Máximo</strong></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h3 style="color: #007bff; margin: 0;">90%</h3>
+                                        <p class="small mb-0"><strong>Nível de Serviço</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Gestão Operacional -->
+                        <div class="card">
+                            <div class="card-header" style="background: var(--color-bg-5);">
+                                <strong>⚙️ Gestão Operacional</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="info-item">
+                                            <span class="info-label">Revisão de Estoque:</span> Semanal
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="info-item">
+                                            <span class="info-label">Localização:</span> Porta-paletes nível 4-5
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="info-item">
+                                            <span class="info-label">Giro Anual:</span> 2,8 vezes
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SKU 3: Cabo HDMI (Classe C) -->
+            <div class="tab-pane fade" id="sku3" role="tabpanel">
+                <div class="card mb-4" style="border: 3px solid #28a745; background: var(--color-bg-3);">
+                    <div class="card-header" style="background: #28a745; color: white;">
+                        <h4 class="mb-0">🔌 SKU 3: Cabo HDMI 2m (P009) - <span class="badge bg-light text-dark">Classe C</span></h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <div class="info-item" style="background: rgba(255,255,255,0.7);">
+                                    <span class="info-label">Código:</span> P009
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="info-item" style="background: rgba(255,255,255,0.7);">
+                                    <span class="info-label">Classe ABC:</span> <span class="badge badge-classe-c">C</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="info-item" style="background: rgba(255,255,255,0.7);">
+                                    <span class="info-label">Faturamento Anual:</span> R$ 189.000
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Parâmetros de Demanda -->
+                        <div class="card mb-3">
+                            <div class="card-header" style="background: var(--color-bg-1);">
+                                <strong>📈 Parâmetros de Demanda</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li><strong>Demanda Anual:</strong> 5.400 unidades</li>
+                                            <li><strong>Demanda Diária Média:</strong> 15,0 unidades/dia</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li><strong>Desvio Padrão Diário:</strong> 3,2 unidades</li>
+                                            <li><strong>Coeficiente de Variação:</strong> 21,3%</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <p class="small mb-0 mt-2" style="background: var(--color-bg-2); padding: 0.5rem; border-radius: 6px;">
+                                    <strong>📝 Comentário:</strong> Produto de Classe C com alta demanda em volume
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Parâmetros de Custo -->
+                        <div class="card mb-3">
+                            <div class="card-header" style="background: var(--color-bg-2);">
+                                <strong>💰 Parâmetros de Custo</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li><strong>Preço Unitário:</strong> R$ 35,00</li>
+                                            <li><strong>Custo Anual Armazenagem:</strong> 20% (R$ 7,00/unidade)</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li><strong>Custo Fixo do Pedido:</strong> R$ 150,00</li>
+                                            <li><strong>Custo Médio de Estoque:</strong> R$ 6.615,00</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Parâmetros de Lead Time -->
+                        <div class="card mb-3">
+                            <div class="card-header" style="background: var(--color-bg-3);">
+                                <strong>⏱️ Parâmetros de Lead Time</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li><strong>Lead Time Médio:</strong> 10 dias</li>
+                                            <li><strong>Lead Time Mínimo:</strong> 7 dias</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li><strong>Lead Time Máximo:</strong> 15 dias</li>
+                                            <li><strong>Variação:</strong> ±8 dias</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cálculos de Parâmetros de Estoque -->
+                        <div class="card mb-3" style="border: 2px solid #28a745;">
+                            <div class="card-header" style="background: #28a745; color: white;">
+                                <strong>🧮 Cálculos de Parâmetros de Estoque</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="row text-center mb-3">
+                                    <div class="col-md-3">
+                                        <h3 style="color: #28a745; margin: 0;">235</h3>
+                                        <p class="small mb-0"><strong>Lote Econômico (LEC)</strong></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h3 style="color: #28a745; margin: 0;">22,9</h3>
+                                        <p class="small mb-0"><strong>Pedidos/Ano</strong></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h3 style="color: #28a745; margin: 0;">16</h3>
+                                        <p class="small mb-0"><strong>Intervalo (dias)</strong></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h3 style="color: #28a745; margin: 0;">18</h3>
+                                        <p class="small mb-0"><strong>Estoque de Segurança</strong></p>
+                                    </div>
+                                </div>
+                                <div class="row text-center">
+                                    <div class="col-md-3">
+                                        <h3 style="color: #dc3545; margin: 0;">18</h3>
+                                        <p class="small mb-0"><strong>Estoque Mínimo</strong></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h3 style="color: #dc3545; margin: 0;">168</h3>
+                                        <p class="small mb-0"><strong>Ponto de Pedido (ROP)</strong></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h3 style="color: #007bff; margin: 0;">403</h3>
+                                        <p class="small mb-0"><strong>Estoque Máximo</strong></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h3 style="color: #007bff; margin: 0;">85%</h3>
+                                        <p class="small mb-0"><strong>Nível de Serviço</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Gestão Operacional -->
+                        <div class="card">
+                            <div class="card-header" style="background: var(--color-bg-5);">
+                                <strong>⚙️ Gestão Operacional</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="info-item">
+                                            <span class="info-label">Revisão de Estoque:</span> Mensal
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="info-item">
+                                            <span class="info-label">Localização:</span> Gaveteiros/Prateleiras
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="info-item">
+                                            <span class="info-label">Giro Anual:</span> 4,1 vezes
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparação Entre SKUs -->
+        <div class="card mt-4">
+            <div class="card-header" style="background: var(--color-primary); color: white;">
+                <strong>📊 Comparação Entre Classes ABC</strong>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Parâmetro</th>
+                                <th class="text-center">Classe A<br><small>SSD 1TB</small></th>
+                                <th class="text-center">Classe B<br><small>Mouse Gamer</small></th>
+                                <th class="text-center">Classe C<br><small>Cabo HDMI</small></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Lote Econômico (LEC)</strong></td>
+                                <td class="text-center">115 unidades</td>
+                                <td class="text-center">92 unidades</td>
+                                <td class="text-center">235 unidades</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Estoque de Segurança</strong></td>
+                                <td class="text-center">16 unidades</td>
+                                <td class="text-center">12 unidades</td>
+                                <td class="text-center">18 unidades</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ponto de Pedido (ROP)</strong></td>
+                                <td class="text-center">116 unidades</td>
+                                <td class="text-center">145 unidades</td>
+                                <td class="text-center">168 unidades</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Nível de Serviço</strong></td>
+                                <td class="text-center"><span class="badge bg-danger">95%</span></td>
+                                <td class="text-center"><span class="badge bg-warning text-dark">90%</span></td>
+                                <td class="text-center"><span class="badge bg-success">85%</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Revisão de Estoque</strong></td>
+                                <td class="text-center">Diária</td>
+                                <td class="text-center">Semanal</td>
+                                <td class="text-center">Mensal</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Giro de Estoque</strong></td>
+                                <td class="text-center">2,1x/ano</td>
+                                <td class="text-center">2,8x/ano</td>
+                                <td class="text-center">4,1x/ano</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-3 p-3" style="background: var(--color-bg-1); border-radius: var(--radius-base);">
+                    <h6 style="color: var(--color-primary);">💡 Análise Comparativa</h6>
+                    <ul class="mb-0">
+                        <li><strong>Classe A:</strong> Alto nível de serviço (95%), controle diário, localização privilegiada para acesso rápido</li>
+                        <li><strong>Classe B:</strong> Nível de serviço moderado (90%), controle semanal, localização intermediária</li>
+                        <li><strong>Classe C:</strong> Nível de serviço reduzido (85%), controle mensal, lotes maiores para reduzir custos de pedido</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ANÁLISE DE CUSTOS - NOVO -->
+        <div class="card mt-4" style="border: 3px solid var(--color-primary);">
+            <div class="card-header" style="background: var(--color-primary); color: white;">
+                <h4 class="mb-0">💰 Análise de Custos de Estoque - SSD 1TB NVMe</h4>
+            </div>
+            <div class="card-body">
+                <p class="mb-4">Análise completa dos custos associados à gestão de estoque, considerando custos de pedir, manter e totais.</p>
+                
+                <div class="row g-4" id="custosEstoqueContainer"></div>
+            </div>
+        </div>
+
+        <!-- Exemplo Detalhado de Cálculos -->
+        <div class="mt-4">
+            <h4 class="mb-3" style="color: var(--color-primary);">🧮 Exemplo Detalhado: Cálculos para SKU Classe A (SSD 1TB NVMe)</h4>
+            <p class="mb-4">A seguir, apresentamos os cálculos detalhados passo a passo para o produto de Classe A, demonstrando como aplicar as fórmulas de gestão de estoques.</p>
+        </div>
+
+        <!-- LEC / EOQ -->
+        <div class="calculo-card">
+            <h4 style="color: #28a745;">🧮 1. Lote Econômico de Compra (LEC / EOQ)</h4>
+            <p><strong>Conceito:</strong> Determina a quantidade ideal de compra que minimiza os custos totais de estoque (custos de pedido + custos de armazenagem).</p>
+            
+            <div class="formula">
+                LEC = √[(2 × D × S) / (H × C)]<br>
+                Onde:<br>
+                D = Demanda anual<br>
+                S = Custo por pedido<br>
+                H = Taxa de armazenagem (%)<br>
+                C = Custo unitário
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <h6>📥 Dados de Entrada:</h6>
+                    <ul>
+                        <li>Demanda Anual (D): 2.400 unidades</li>
+                        <li>Custo por Pedido (S): R$ 250,00</li>
+                        <li>Preço Unitário (C): R$ 450,00</li>
+                        <li>Taxa de Armazenagem (H): 20% ao ano</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h6>📤 Cálculo:</h6>
+                    <p style="font-family: var(--font-family-mono); background: white; padding: 1rem; border-radius: var(--radius-base);">
+                        LEC = √[(2 × 2.400 × 250) / (0,20 × 450)]<br>
+                        LEC = √[1.200.000 / 90]<br>
+                        LEC = √13.333,33<br>
+                        LEC ≈ <strong style="color: #28a745;">115 unidades</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="resultado">
+                ✅ Resultado: Comprar lotes de <strong>115 unidades</strong>
+            </div>
+
+            <div class="mt-3 p-3" style="background: rgba(255,255,255,0.7); border-radius: var(--radius-base);">
+                <h6 style="color: #28a745;">💡 Interpretação:</h6>
+                <ul class="mb-0">
+                    <li><strong>Número de Pedidos/Ano:</strong> 2.400 / 115 ≈ 20,8 pedidos (aproximadamente a cada 17 dias)</li>
+                    <li><strong>Benefício:</strong> Reduz custos operacionais em aproximadamente 15% comparado à política atual</li>
+                    <li><strong>Aplicação:</strong> Implementar compras programadas quinzenais, reduzindo custos de transporte e processamento</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Estoque de Segurança -->
+        <div class="calculo-card" style="background: var(--color-bg-1); border-color: #007bff;">
+            <h4 style="color: #007bff;">🛡️ 2. Estoque de Segurança (Safety Stock)</h4>
+            <p><strong>Conceito:</strong> Quantidade adicional mantida para proteger contra variações na demanda e atrasos no fornecimento.</p>
+            
+            <div class="formula">
+                ES = Z × σ × √LT<br>
+                Onde:<br>
+                Z = Fator de nível de serviço<br>
+                σ = Desvio padrão da demanda<br>
+                LT = Lead time (dias)
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <h6>📥 Dados de Entrada:</h6>
+                    <ul>
+                        <li>Nível de Serviço: 95%</li>
+                        <li>Z-score (95%): 1,65</li>
+                        <li>Desvio Padrão Demanda: 2,5 unid/dia</li>
+                        <li>Lead Time: 15 dias</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h6>📤 Cálculo:</h6>
+                    <p style="font-family: var(--font-family-mono); background: white; padding: 1rem; border-radius: var(--radius-base);">
+                        ES = 1,65 × 2,5 × √15<br>
+                        ES = 1,65 × 2,5 × 3,87<br>
+                        ES = 1,65 × 9,68<br>
+                        ES ≈ <strong style="color: #007bff;">16 unidades</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="resultado" style="color: #007bff;">
+                ✅ Resultado: Manter <strong>16 unidades</strong> como estoque de segurança
+            </div>
+
+            <div class="mt-3 p-3" style="background: rgba(255,255,255,0.7); border-radius: var(--radius-base);">
+                <h6 style="color: #007bff;">💡 Interpretação:</h6>
+                <ul class="mb-0">
+                    <li><strong>Proteção:</strong> Garante 95% de disponibilidade mesmo com variações de demanda</li>
+                    <li><strong>Custo:</strong> Investimento de R$ 7.200 (16 × R$ 450) em estoque de segurança</li>
+                    <li><strong>Benefício:</strong> Evita rupturas e perda de vendas estimada em R$ 35.000/mês</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Ponto de Pedido -->
+        <div class="calculo-card" style="background: var(--color-bg-4); border-color: #dc3545;">
+            <h4 style="color: #dc3545;">🚨 3. Ponto de Pedido (ROP - Reorder Point)</h4>
+            <p><strong>Conceito:</strong> Nível de estoque que dispara automaticamente um novo pedido de compra.</p>
+            
+            <div class="formula">
+                ROP = (D × LT) + ES<br>
+                Onde:<br>
+                D = Demanda média diária<br>
+                LT = Lead time (dias)<br>
+                ES = Estoque de segurança
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <h6>📥 Dados de Entrada:</h6>
+                    <ul>
+                        <li>Demanda Anual: 2.400 unidades</li>
+                        <li>Demanda Diária: 2.400 / 360 = 6,67 unid/dia</li>
+                        <li>Lead Time: 15 dias</li>
+                        <li>Estoque de Segurança: 16 unidades</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h6>📤 Cálculo:</h6>
+                    <p style="font-family: var(--font-family-mono); background: white; padding: 1rem; border-radius: var(--radius-base);">
+                        ROP = (6,67 × 15) + 16<br>
+                        ROP = 100 + 16<br>
+                        ROP = <strong style="color: #dc3545;">116 unidades</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="resultado" style="color: #dc3545;">
+                ✅ Resultado: Emitir pedido quando estoque atingir <strong>116 unidades</strong>
+            </div>
+
+            <div class="mt-3 p-3" style="background: rgba(255,255,255,0.7); border-radius: var(--radius-base);">
+                <h6 style="color: #dc3545;">💡 Interpretação e Aplicação:</h6>
+                <ul class="mb-0">
+                    <li><strong>Automação:</strong> Sistema WMS deve gerar alerta automático ao atingir 116 unidades</li>
+                    <li><strong>Lógica:</strong> 100 unidades serão consumidas durante os 15 dias de lead time + 16 de segurança</li>
+                    <li><strong>Pedido:</strong> Solicitar 115 unidades (LEC calculado anteriormente)</li>
+                    <li><strong>Fluxo:</strong> Estoque mínimo antes da chegada será de aproximadamente 16 unidades (o estoque de segurança)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Síntese -->
+        <div class="card mt-4">
+            <div class="card-header" style="background: var(--color-primary); color: white;">
+                <strong>📋 Síntese da Política de Estoque para SSD 1TB NVMe</strong>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <h2 style="color: #28a745;">115</h2>
+                        <p class="small"><strong>Lote de Compra</strong><br>Unidades por pedido</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h2 style="color: #007bff;">16</h2>
+                        <p class="small"><strong>Estoque de Segurança</strong><br>Proteção 95%</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h2 style="color: #dc3545;">116</h2>
+                        <p class="small"><strong>Ponto de Pedido</strong><br>Dispara compra</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h2 style="color: #ffc107;">17</h2>
+                        <p class="small"><strong>Intervalo</strong><br>Dias entre pedidos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-nav">
+            <button class="btn btn-outline-secondary" onclick="scrollToSection('secao4')">⬅️ Seção Anterior</button>
+            <button class="btn btn-primary" onclick="scrollToSection('secao6')">Próxima Seção ➡️</button>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 6: CAPACIDADES E EFICIÊNCIA OEE -->
+    <section id="secao6" class="container my-5">
+        <div class="section-header">
+            <h2>⚙️ Seção 6: Análise de Capacidades e Eficiência (OEE)</h2>
+            <p>Análise de Capacidades do Sistema e Índices de Desempenho Operacional</p>
+        </div>
+
+        <!-- Dados do Armazém -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <strong>📐 Características do Armazém</strong>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <span class="info-label">📏 Área Total:</span>
+                            <span>1.200 m²</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">📐 Dimensões:</span>
+                            <span>40m × 30m</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">⬆️ Altura do Teto:</span>
+                            <span>8 metros</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">📊 Altura Útil de Estocagem:</span>
+                            <span>6 metros</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <span class="info-label">🚫 Áreas Não Dedicadas:</span>
+                            <span>400 m² (corredores, docas, escritório)</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">✅ Área Útil de Armazenagem:</span>
+                            <span>800 m²</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">📦 Tipo de Estrutura:</span>
+                            <span>Porta-paletes seletivo</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">📏 Dimensão Palete Padrão:</span>
+                            <span>1,00m × 1,20m × 1,50m (altura)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cálculo de Capacidade -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <strong>🧮 Cálculo da Capacidade de Armazenagem</strong>
+            </div>
+            <div class="card-body">
+                <h6 style="color: var(--color-primary);">📐 Passo 1: Volume Total e Útil</h6>
+                <div class="formula mb-3">
+                    Volume Bruto = Área Total × Altura Teto<br>
+                    Volume Bruto = 1.200 m² × 8 m = 9.600 m³
+                </div>
+                <div class="formula mb-4">
+                    Volume Útil = Área Útil × Altura Útil<br>
+                    Volume Útil = 800 m² × 6 m = 4.800 m³
+                </div>
+
+                <h6 style="color: var(--color-primary);">📦 Passo 2: Capacidade em Paletes</h6>
+                <div class="formula mb-3">
+                    Área por Posição Palete = 1,00 × 1,20 = 1,44 m² (incluindo espaçamento)<br>
+                    Níveis de Altura = 6 m / 1,5 m = 4 níveis<br>
+                    Posições por Nível = 800 m² / 1,44 m² ≈ 555 posições<br>
+                    <strong>Capacidade Total = 555 × 4 = 2.220 posições-palete</strong>
+                </div>
+
+                <h6 style="color: var(--color-primary);">📊 Passo 3: Fator de Ocupação Real</h6>
+                <p>Considerando corredores de movimentação, espaçamento de segurança e acessibilidade:</p>
+                <div class="formula mb-4">
+                    Taxa de Aproveitamento = 78% (padrão para porta-paletes seletivo)<br>
+                    <strong>Capacidade Real = 2.220 × 0,78 ≈ 1.733 paletes</strong>
+                </div>
+
+                <h6 style="color: var(--color-primary);">📦 Passo 4: Capacidade em Unidades de Produto</h6>
+                <div class="formula">
+                    Média de 50 unidades por palete (produtos eletrônicos)<br>
+                    <strong>Capacidade em Unidades = 1.733 × 50 = 86.667 unidades</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Análise Comparativa de Capacidades -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <strong>📦 Análise Comparativa de Capacidades do Sistema</strong>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="card" style="border-left: 4px solid #28a745; background: var(--color-bg-3);">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-2">
+                                    <span style="font-size: 2rem; margin-right: 1rem;">📊</span>
+                                    <h5 class="mb-0" style="color: #28a745;">Capacidade Instalada</h5>
+                                </div>
+                                <div class="row text-center mt-3">
+                                    <div class="col-4">
+                                        <h4 style="color: #28a745; margin: 0;">9.600 m³</h4>
+                                        <p class="small text-muted mb-0">Volume</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <h4 style="color: #28a745; margin: 0;">5.333</h4>
+                                        <p class="small text-muted mb-0">Paletes</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <h4 style="color: #28a745; margin: 0;">266.667</h4>
+                                        <p class="small text-muted mb-0">Produtos</p>
+                                    </div>
+                                </div>
+                                <p class="small mt-3 mb-0" style="background: rgba(255,255,255,0.7); padding: 0.5rem; border-radius: 6px;">
+                                    <strong>Descrição:</strong> Capacidade teórica máxima sem restrições (Área Total 1.200m² × Altura Teto 8m)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card" style="border-left: 4px solid #007bff; background: var(--color-bg-1);">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-2">
+                                    <span style="font-size: 2rem; margin-right: 1rem;">⚙️</span>
+                                    <h5 class="mb-0" style="color: #007bff;">Capacidade Disponível</h5>
+                                </div>
+                                <div class="row text-center mt-3">
+                                    <div class="col-4">
+                                        <h4 style="color: #007bff; margin: 0;">4.800 m³</h4>
+                                        <p class="small text-muted mb-0">Volume</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <h4 style="color: #007bff; margin: 0;">2.667</h4>
+                                        <p class="small text-muted mb-0">Paletes</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <h4 style="color: #007bff; margin: 0;">133.333</h4>
+                                        <p class="small text-muted mb-0">Produtos</p>
+                                    </div>
+                                </div>
+                                <p class="small mt-3 mb-0" style="background: rgba(255,255,255,0.7); padding: 0.5rem; border-radius: 6px;">
+                                    <strong>Descrição:</strong> Excluindo áreas não-armazenagem (Área Útil 800m² × Altura Útil 6m)<br>
+                                    <span class="badge bg-warning text-dark mt-1">↓ Redução: 50% em relação à Instalada</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card" style="border-left: 4px solid #ffc107; background: var(--color-bg-2);">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-2">
+                                    <span style="font-size: 2rem; margin-right: 1rem;">🎯</span>
+                                    <h5 class="mb-0" style="color: #ffc107;">Capacidade Real</h5>
+                                </div>
+                                <div class="row text-center mt-3">
+                                    <div class="col-4">
+                                        <h4 style="color: #ffc107; margin: 0;">3.120 m³</h4>
+                                        <p class="small text-muted mb-0">Volume</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <h4 style="color: #ffc107; margin: 0;">1.733</h4>
+                                        <p class="small text-muted mb-0">Paletes</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <h4 style="color: #ffc107; margin: 0;">86.667</h4>
+                                        <p class="small text-muted mb-0">Produtos</p>
+                                    </div>
+                                </div>
+                                <p class="small mt-3 mb-0" style="background: rgba(255,255,255,0.7); padding: 0.5rem; border-radius: 6px;">
+                                    <strong>Descrição:</strong> Com fator de utilização 65% (considera corredores, espaços de manobra)<br>
+                                    <span class="badge bg-warning text-dark mt-1">↓ Redução: 35% em relação à Disponível</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card" style="border-left: 4px solid #dc3545; background: var(--color-bg-4);">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-2">
+                                    <span style="font-size: 2rem; margin-right: 1rem;">📈</span>
+                                    <h5 class="mb-0" style="color: #dc3545;">Capacidade Efetiva</h5>
+                                </div>
+                                <div class="row text-center mt-3">
+                                    <div class="col-4">
+                                        <h4 style="color: #dc3545; margin: 0;">2.340 m³</h4>
+                                        <p class="small text-muted mb-0">Volume</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <h4 style="color: #dc3545; margin: 0;">1.300</h4>
+                                        <p class="small text-muted mb-0">Paletes</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <h4 style="color: #dc3545; margin: 0;">65.000</h4>
+                                        <p class="small text-muted mb-0">Produtos</p>
+                                    </div>
+                                </div>
+                                <p class="small mt-3 mb-0" style="background: rgba(255,255,255,0.7); padding: 0.5rem; border-radius: 6px;">
+                                    <strong>Descrição:</strong> Volume efetivamente utilizado (Taxa ocupação atual 75%)<br>
+                                    <span class="badge bg-success mt-1">✓ Há 25% de espaço livre para crescimento</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Índices de Eficiência -->
+        <div class="card mb-4">
+            <div class="card-header" style="background: var(--color-primary); color: white;">
+                <strong>⚙️ Índices de Eficiência do Sistema de Armazenagem</strong>
+            </div>
+            <div class="card-body">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card" style="border: 2px solid var(--color-primary); background: var(--color-bg-1);">
+                            <div class="card-body text-center">
+                                <span style="font-size: 3rem;">📊</span>
+                                <h5 class="mt-2" style="color: var(--color-primary);">Índice de Eficiência Global (IEG)</h5>
+                                <h1 style="color: var(--color-primary); font-weight: 700; font-size: 3.5rem; margin: 1rem 0;">24.38%</h1>
+                                <div class="progress mb-3" style="height: 30px;">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 24.38%" aria-valuenow="24.38" aria-valuemin="0" aria-valuemax="100">
+                                        <strong>24.38%</strong>
+                                    </div>
+                                </div>
+                                <div class="formula" style="text-align: left; font-size: 0.9rem;">
+                                    <strong>Fórmula:</strong><br>
+                                    (Capacidade Efetiva / Capacidade Instalada) × 100<br>
+                                    (2.340 / 9.600) × 100 = 24.38%
+                                </div>
+                                <p class="mt-3 small" style="background: rgba(255,255,255,0.7); padding: 0.75rem; border-radius: 6px;">
+                                    <strong>Interpretação:</strong> O armazém está utilizando 24.38% de sua capacidade teórica máxima
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card" style="border: 2px solid #007bff; background: var(--color-bg-1);">
+                            <div class="card-body text-center">
+                                <span style="font-size: 3rem;">⚙️</span>
+                                <h5 class="mt-2" style="color: #007bff;">Índice de Eficiência Operacional (IEO)</h5>
+                                <h1 style="color: #007bff; font-weight: 700; font-size: 3.5rem; margin: 1rem 0;">48.75%</h1>
+                                <div class="progress mb-3" style="height: 30px;">
+                                    <div class="progress-bar" role="progressbar" style="width: 48.75%; background-color: #007bff;" aria-valuenow="48.75" aria-valuemin="0" aria-valuemax="100">
+                                        <strong>48.75%</strong>
+                                    </div>
+                                </div>
+                                <div class="formula" style="text-align: left; font-size: 0.9rem;">
+                                    <strong>Fórmula:</strong><br>
+                                    Fator de Localização (65%) × Taxa de Ocupação (75%)<br>
+                                    0.65 × 0.75 × 100 = 48.75%
+                                </div>
+                                <p class="mt-3 small" style="background: rgba(255,255,255,0.7); padding: 0.75rem; border-radius: 6px;">
+                                    <strong>Interpretação:</strong> Desempenho relativo à infraestrutura operacional
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card" style="border: 2px solid #28a745; background: var(--color-bg-3);">
+                            <div class="card-body text-center">
+                                <span style="font-size: 3rem;">🎯</span>
+                                <h5 class="mt-2" style="color: #28a745;">Espaço Livre Disponível</h5>
+                                <h1 style="color: #28a745; font-weight: 700; font-size: 3.5rem; margin: 1rem 0;">25%</h1>
+                                <div class="progress mb-3" style="height: 30px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                        <strong>25%</strong>
+                                    </div>
+                                </div>
+                                <p class="mt-3 small" style="background: rgba(255,255,255,0.7); padding: 0.75rem; border-radius: 6px;">
+                                    Baseado em: (Capacidade Real - Capacidade Efetiva) / Capacidade Real<br>
+                                    <strong>Margem para crescimento</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card" style="border: 2px solid var(--color-primary); background: var(--color-bg-1);">
+                            <div class="card-body text-center">
+                                <span style="font-size: 3rem;">📈</span>
+                                <h5 class="mt-2" style="color: var(--color-primary);">Taxa de Ocupação Atual</h5>
+                                <h1 style="color: var(--color-primary); font-weight: 700; font-size: 3.5rem; margin: 1rem 0;">75%</h1>
+                                <div class="progress mb-3" style="height: 30px;">
+                                    <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                                        <strong>75%</strong>
+                                    </div>
+                                </div>
+                                <p class="mt-3 small" style="background: rgba(255,255,255,0.7); padding: 0.75rem; border-radius: 6px;">
+                                    Capacidade Efetiva / Capacidade Real<br>
+                                    <span class="badge bg-success mt-1">✓ Dentro da faixa ótima (70-85%)</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resultados e Indicadores -->
+        <div class="card mb-4">
+            <div class="card-header" style="background: var(--color-primary); color: white;">
+                <strong>📊 Resumo: Capacidade do Sistema de Armazenagem</strong>
+            </div>
+            <div class="card-body">
+                <div class="row text-center mb-4">
+                    <div class="col-md-3">
+                        <h2 style="color: var(--color-primary);">4.800 m³</h2>
+                        <p class="small"><strong>Volume Útil Total</strong></p>
+                    </div>
+                    <div class="col-md-3">
+                        <h2 style="color: var(--color-primary);">1.733</h2>
+                        <p class="small"><strong>Posições-Palete</strong></p>
+                    </div>
+                    <div class="col-md-3">
+                        <h2 style="color: var(--color-primary);">86.667</h2>
+                        <p class="small"><strong>Unidades de Produto</strong></p>
+                    </div>
+                    <div class="col-md-3">
+                        <h2 style="color: var(--color-primary);">78%</h2>
+                        <p class="small"><strong>Taxa de Aproveitamento</strong></p>
+                    </div>
+                </div>
+
+                <h6 style="color: var(--color-primary);">📈 Indicadores de Eficiência</h6>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span><strong>Taxa de Ocupação Atual:</strong></span>
+                        <span>75% (1.300 paletes ocupados)</span>
+                    </div>
+                    <div class="progress" style="height: 25px;">
+                        <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span><strong>Aproveitamento Cúbico:</strong></span>
+                        <span>66,7% (incluindo áreas operacionais)</span>
+                    </div>
+                    <div class="progress" style="height: 25px;">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 66.7%" aria-valuenow="66.7" aria-valuemin="0" aria-valuemax="100">66,7%</div>
+                    </div>
+                </div>
+
+                <div class="mt-4 p-3" style="background: var(--color-bg-1); border-radius: var(--radius-base);">
+                    <h6 style="color: var(--color-primary);">💡 Análise e Recomendações</h6>
+                    <ul class="mb-2">
+                        <li><strong>Capacidade Adequada:</strong> Estoque atual representa 75% da capacidade, deixando margem de 25% para crescimento e sazonalidade</li>
+                        <li><strong>Oportunidade de Melhoria:</strong> Taxa de ocupação pode ser aumentada para 85% com melhor organização ABC</li>
+                        <li><strong>Estrutura Eficiente:</strong> Porta-paletes seletivo oferece boa acessibilidade (FIFO/LIFO) ideal para mix diversificado</li>
+                        <li><strong>Produtividade:</strong> Densidade de 72 unidades/m² útil é superior à média do setor (50 unid/m²)</li>
+                    </ul>
+                    <p class="mb-0"><strong>Ações Futuras:</strong> Considerar automação (transelevadores) quando ocupação ultrapassar 85% de forma consistente; Implementar WMS com endereçamento dinâmico para otimizar picking.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-nav">
+            <button class="btn btn-outline-secondary" onclick="scrollToSection('secao5')">⬅️ Seção Anterior</button>
+            <button class="btn btn-outline-secondary" onclick="scrollToSection('home')">⬆️ Voltar ao Início</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container text-center">
+            <h5>🎯 Implementação Prática do PI - UC2</h5>
+            <p>DistribuidoraTech Brasil - Análise Operacional Integrada | Processos, Custos e Capacidades</p>
+            <p class="small mb-0">© 2025 - Desenvolvido para fins acadêmicos e profissionais</p>
+        </div>
+    </footer>
+
+    <!-- Botão Voltar ao Topo -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToSection('home')">⬆️</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
