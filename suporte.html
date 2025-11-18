@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Projeto Integrador Logística – Detalhamento por Grupo Completo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    body { background: #ecf0f1; }
+    .topico {margin-bottom:40px;}
+    .section-box { background: #fff; border-radius: 12px; padding: 18px; margin-bottom:18px; box-shadow: 0 2px 12px #d6d6d633;}
+    .section-box.blue {border-left:8px solid #3498db;}
+    .section-box.red {border-left:8px solid #c0392b;}
+    .section-box.purple {border-left:8px solid #8e44ad;}
+    .section-box.teal {border-left:8px solid #1abc9c;}
+    .section-title {font-weight: bold; font-size:1.08em;}
+    .badge { font-size: .93em; }
+    .emoji {font-size: 1.2em; vertical-align: middle;}
+    .glossario-box {background: #e8eaf6; border-radius:8px; padding:12px; font-size:.96em;}
+    ul, ol {margin-bottom:0;}
+    hr {margin: 14px 0;}
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-primary">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1 text-white">Projeto Integrador Logística – Exemplos Práticos Detalhados 🚀</span>
+    </div>
+  </nav>
+  <div class="container py-4">
+    <ul class="nav nav-tabs mb-4" id="dashboardTabs">
+      <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tab1">📦 Reembalagem</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab2">🥩 Assados</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab3">🍇 Açaí</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab4">🎉 Eventos</a></li>
+    </ul>
+    <div class="tab-content">
+
+      <!-- REEMBALAGEM -->
+      <div class="tab-pane fade show active" id="tab1">
+        <h2 class="text-primary mb-3">📦 Embal-Tech Solutions <small>Reembalagem de Alimentos</small></h2>
+        <!-- FATIAMENTO DO MERCADO -->
+        <div class="section-box blue">
+          <span class="section-title"><i class="fa-solid fa-shop"></i> Fatiamento do Mercado: Segmentação por SKU & Operação Prática</span>
+          <ol>
+            <li><b>Exemplo de SKUs:</b>
+              <ul>
+                <li>SKU001 - Bobina plástica flexível para arroz (2kg, QR, logo personalizado)</li>
+                <li>SKU002 - Embalagem para chips (100g, metalizada, zip, rastreamento QR)</li>
+                <li>SKU003 - Embalagem ecológica para granola (350g, biofilme, tags biodegradáveis)</li>
+                <li>SKU004 - Embalagem PET para doces finos (rotulagem personalizada, selo frescor)</li>
+              </ul>
+            </li>
+            <li><b>Insumos e recursos:</b>
+              <ul>
+                <li>Plásticos, biofilmes, etiquetas QR/RFID, tinta alimentícia, fitas selagem, seladora automática, balança digital certificada, notebook com ERP, racks, carrinhos, EPIs.</li>
+              </ul>
+            </li>
+            <li><b>Operação:</b>
+              <ol>
+                <li>Receba bobinas (500kg), registre, pese e confira NF/lote.</li>
+                <li>Reembale manual ou semi-automático, aplique QR, faça inspeção e movimente para estante correta (A1-RackB).</li>
+                <li>Registre via ERP, consolide inventário, prepare expedição com checklist SOP.</li>
+              </ol>
+            </li>
+          </ol>
+        </div>
+        <!-- I.A. E INOVAÇÃO -->
+        <div class="section-box blue">
+          <span class="section-title"><i class="fa-solid fa-robot"></i> I.A. & Inovação</span>
+          <ol>
+            <li><b>ERP Integrado:</b>
+              <div class="glossario-box">Registro automático de cada SKU; pedidos disparados automaticamente ao atingir estoque mínimo; integração de compra, produção e expedição.</div>
+            </li>
+            <li><b>OCR no Recebimento:</b>
+              <div class="glossario-box">Transforma imagem da NF e etiqueta em dados no ERP; elimina erro manual, acelera processamento.</div>
+            </li>
+            <li><b>Dashboard de KPIs:</b>
+              <div class="glossario-box">Visualização rápida de divergências, produtividade, lotes movimentados e tempo médio dos ciclos logísticos, facilitando tomadas de decisão.</div>
+            </li>
+            <li><b>QR-Code na rastreabilidade:</b>
+              <div class="glossario-box">Etiqueta aplicada a cada unidade embalada, escaneada para checagem completa (lote, origem, movimentações e expedição).</div>
+            </li>
+          </ol>
+        </div>
+        <!-- CONEXÃO COM UCs -->
+        <div class="section-box blue">
+          <span class="section-title"><i class="fa-solid fa-cubes"></i> Conexão com UCs</span>
+          <ul>
+            <li><b>UC1:</b> Checklist digital para recebimento → peso, lote, foto e registro no ERP.</li>
+            <li><b>UC2:</b> Simula cotação (e-mail real), cria pedido automatizado quando estoque está baixo, tudo registrado.</li>
+            <li><b>UC3:</b> Endereçamento físico e cadastro de posição; inventário rotativo e movimentação registrada via QR ou manual.</li>
+            <li><b>UC4:</b> Inventário físico semanal, SO (ajuste), relatório de divergências e acurácia fechando ciclo do inventário.</li>
+          </ul>
+        </div>
+        <!-- INSIGHTS PESQUISA & AÇÃO INICIAL -->
+        <div class="section-box blue">
+          <span class="section-title"><i class="fa-solid fa-lightbulb"></i> Insights Pesquisa & Ação Inicial</span>
+          <ol>
+            <li><b>Busca online de fornecedores:</b>
+              <div class="glossario-box">Monte planilha com dados de contato, tipos de insumo, mínimo pedido, lead time, condições de entrega e certificações.</div>
+            </li>
+            <li><b>Solicitação e registro de cotação:</b>
+              <div class="glossario-box">Elabore e envie cotação padrão (preço, prazo, quantidade, entrega); salve todas as respostas e simule decisão de compra realista.</div>
+            </li>
+            <li><b>Elaboração do SOP:</b>
+              <div class="glossario-box">Detalhe cada etapa, responsável, tempo meta, pontos de controle e evidências geradas; compartilhe via nuvem ou impresso.</div>
+            </li>
+            <li><b>Simulação digital visual:</b>
+              <div class="glossario-box">Use Trello ou Jamboard, crie colunas para cada etapa, movimente cartões/ações em roteiro cronológico do processo.</div>
+            </li>
+          </ol>
+        </div>
+        <!-- PRODUTO FINAL ESPERADO & PROCEDIMENTO -->
+        <div class="section-box blue">
+          <span class="section-title"><i class="fa-solid fa-warehouse"></i> Produto Final Esperado & Procedimento</span>
+          <ol>
+            <li><b>Importância:</b>
+              <div class="glossario-box">Demonstrar a aplicabilidade dos conceitos, integração de processos, rastreabilidade e uso prático do ERP/SOP.</div>
+            </li>
+            <li><b>Etapas para entrega:</b>
+              <ul>
+                <li>Cadastro completo dos SKUs.</li>
+                <li>SOP do grupo em nuvem e físico.</li>
+                <li>Checklist de processos realizados.</li>
+                <li>Dashboard e relatório de KPIs.</li>
+                <li>Mapeamento físico do layout do armazém.</li>
+                <li>Demostração em apresentação prática.</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+        <!-- GLOSSÁRIO -->
+        <div class="section-box blue">
+          <span class="section-title">📖 Glossário</span>
+          <ul>
+            <li><b>SKU:</b> Unidade de produto para controle.</li>
+            <li><b>ERP:</b> Sistema de gestão integrado.</li>
+            <li><b>OCR:</b> Leitura óptica de caracteres.</li>
+            <li><b>SOP:</b> Procedimento operacional padrão.</li>
+            <li><b>QR-Code:</b> Código bidimensional.</li>
+            <li><b>FIFO:</b> Primeiro que entra, primeiro que sai.</li>
+            <li><b>KPI:</b> Indicador-chave.</li>
+            <li><b>B2C/B2B:</b> Para consumidor final/empresa.</li>
+            <li><b>API:</b> Integração de sistemas.</li>
+            <li><b>Lead time:</b> Tempo para entregar insumo/produto.</li>
+            <li><b>Endereçamento:</b> Posição física no armazém.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ASSADOS -->
+      <div class="tab-pane fade" id="tab2">
+        <h2 class="text-danger mb-3">🥩 CarneExpress <small>Assados e Carnes Temperadas</small></h2>
+        <div class="section-box red">
+          <span class="section-title"><i class="fa-solid fa-shop"></i> Fatiamento do Mercado</span>
+          <ol>
+            <li><b>Exemplo de SKUs:</b>
+              <ul>
+                <li>SKU101 - Picanha SIF (250g, vácuo, QR)</li>
+                <li>SKU102 - Costela bovina pronta (600g, QR, caixa térmica)</li>
+                <li>SKU103 - Espetinho frango temperado (130g, PET, QR, lote)</li>
+                <li>SKU104 - Combo churrasco (1kg, variados, QR, kit especial)</li>
+              </ul>
+            </li>
+            <li><b>Insumos:</b>
+              <ul>
+                <li>Carnes SIF, temperos naturais, embalagens PET/vácuo, termômetros, etiquetas QR, câmaras frias, ERP, balança, impressora.</li>
+              </ul>
+            </li>
+            <li><b>Operação:</b>
+              <ol>
+                <li>Recebimento com selo SIF, medição temperatura (máx. 4ºC), registro, foto do lote.</li>
+                <li>Corte, tempero, embalagem, aplicação QR-code para rastreio.</li>
+                <li>Armazenagem em câmaras frias (-18ºC), ordenação por lote/data.</li>
+                <li>Inventário e separação para expedição (por cliente, canal).</li>
+                <li>Registro de despacho e análise de tempo de estoque via ERP.</li>
+              </ol>
+            </li>
+          </ol>
+        </div>
+        <div class="section-box red">
+          <span class="section-title"><i class="fa-solid fa-robot"></i> I.A. & Inovação</span>
+          <ol>
+            <li><b>Sensores IoT:</b>
+              <div class="glossario-box">Monitoramento de temperatura e umidade em câmaras, alertas automáticos via WhatsApp ou e-mail; registro no ERP para auditoria e recall.</div>
+            </li>
+            <li><b>SIF, ERP e lote:</b>
+              <div class="glossario-box">Controle total dos lotes, número do SIF, rotas de inspeção; organização pela data de entrada para garantir FIFO e rastreabilidade.</div>
+            </li>
+            <li><b>Previsão de demanda:</b>
+              <div class="glossario-box">Registre vendas semanais, use planilha ou Python para prever picos/campanhas, acionar pedidos automáticos de reposição.</div>
+            </li>
+            <li><b>CRM campanhas:</b>
+              <div class="glossario-box">Cadastro de clientes; disparo programado de ação promocional para combos, controle de retorno/satisfação.</div>
+            </li>
+          </ol>
+        </div>
+        <div class="section-box red">
+          <span class="section-title"><i class="fa-solid fa-cubes"></i> Conexão com UCs</span>
+          <ul>
+            <li><b>UC1:</b> Checklist digital para cada recebimento: foto, temperatura, lote, registro no sistema.</li>
+            <li><b>UC2:</b> Tabela de cotação real, simulação de compra, geração de pedido, controle do tempo de entrega.</li>
+            <li><b>UC3:</b> Organização de lotes no armazenamento, atualização de movimentação, inventário rotativo.</li>
+            <li><b>UC4:</b> Inventário por QR, relatório por FIFO, registro de tempo em estoque e alertas automáticos.</li>
+          </ul>
+        </div>
+        <div class="section-box red">
+          <span class="section-title"><i class="fa-solid fa-lightbulb"></i> Insights Pesquisa & Ação Inicial</span>
+          <ol>
+            <li><b>Busca e validação SIF:</b>
+              <div class="glossario-box">Portal do Ministério da Agricultura para listar fornecedores, registrar exigências e confiabilidade.</div>
+            </li>
+            <li><b>Simulação cotação:</b>
+              <div class="glossario-box">Elabore cotação, registre tempo de resposta e prazo; escolha fornecedor mais confiável para operação real.</div>
+            </li>
+            <li><b>Checklist digital:</b>
+              <div class="glossario-box">Crie checklist de temperatura, foto, processo na planilha; compartilhe via nuvem.</div>
+            </li>
+            <li><b>Workflow virtual:</b>
+              <div class="glossario-box">Monte quadro digital para mapear etapas, movimente cartões simulando operações do grupo.</div>
+            </li>
+          </ol>
+        </div>
+        <div class="section-box red">
+          <span class="section-title"><i class="fa-solid fa-warehouse"></i> Produto Final Esperado & Procedimento</span>
+          <ol>
+            <li><b>Importância:</b>
+              <div class="glossario-box">Validação da rastreabilidade, operação SIF, registros práticos e integração dos dados.</div>
+            </li>
+            <li><b>Etapas para entrega:</b>
+              <ul>
+                <li>Cadastro dos SKUs reais, SOP detalhado, registros operacionais e relatório de auditoria.</li>
+                <li>Demo prática na apresentação de integração ERP, checklist, sensoriamento e dashboard.</li>
+                <li>Discussão dos riscos e sugestões de melhoria no processo.</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+        <div class="section-box red">
+          <span class="section-title">📖 Glossário</span>
+          <ul>
+            <li><b>SIF:</b> Serviço de Inspeção Federal.</li>
+            <li><b>IoT:</b> Internet das Coisas (sensores inteligentes).</li>
+            <li><b>Recall:</b> Recolhimento de lote por qualidade.</li>
+            <li><b>CRM:</b> Gestão do relacionamento com clientes.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- AÇAÍ -->
+      <div class="tab-pane fade" id="tab3">
+        <h2 class="text-purple mb-3">🍇 AçaíTech Premium <small>Açaí, Sorvetes e Doces</small></h2>
+        <div class="section-box purple">
+          <span class="section-title"><i class="fa-solid fa-shop"></i> Fatiamento do Mercado</span>
+          <ol>
+            <li><b>Exemplo de SKUs:</b>
+              <ul>
+                <li>SKU201 - Polpa de açaí congelada (1kg, ultra-freezer, selo Pará, QR)</li>
+                <li>SKU202 - Sorvete de açaí gourmet (500ml, PET, QR, toppings)</li>
+                <li>SKU203 - Kit tigela açaiteria (300g polpa + granola, combo shelf, QR)</li>
+                <li>SKU204 - Combo delivery B2C (2L polpa + 6 toppings, QR e tracking pelo sistema)</li>
+              </ul>
+            </li>
+            <li><b>Insumos:</b>
+              <ul>
+                <li>Polpa Pará, toppings, potes PET/BIO, etiquetas QR, ultra-freezers -25ºC, ERP, notebook, balança certificada.</li>
+              </ul>
+            </li>
+            <li><b>Operação:</b>
+              <ol>
+                <li>Recebimento polpa (-25ºC), conferência, foto, registro no ERP por lote/tipo.</li>
+                <li>Distribuição em potes/tigelas, montagem combos, etiquetagem QR.</li>
+                <li>Armazenagem ordenada por sabor/endereço em ultra-freezer.</li>
+                <li>Inventário e expedição por QR e tracking de pedidos.</li>
+              </ol>
+            </li>
+          </ol>
+        </div>
+        <div class="section-box purple">
+          <span class="section-title"><i class="fa-solid fa-robot"></i> I.A. & Inovação</span>
+          <ol>
+            <li><b>ERP integrado à plataforma de delivery:</b>
+              <div class="glossario-box">Cadastro de produtos, integração via API ao marketplace, permitindo atualização de estoque e rastreio em tempo real.</div>
+            </li>
+            <li><b>Forecast da sazonalidade:</b>
+              <div class="glossario-box">Registre demanda por semana/mês, use planilha ou script para prever picos (verão, feriados); gere alerta para compra antecipada.</div>
+            </li>
+            <li><b>IoT em ultra-freezer:</b>
+              <div class="glossario-box">Sensores de temperatura e alarme para quedas/variações; registro digital para auditoria, garantia de qualidade e compliance.</div>
+            </li>
+            <li><b>App cliente para combos:</b>
+              <div class="glossario-box">App/web para configuração personalizada das tigelas, integração do pedido e rastreio pelo QR.</div>
+            </li>
+          </ol>
+        </div>
+        <div class="section-box purple">
+          <span class="section-title"><i class="fa-solid fa-cubes"></i> Conexão com UCs</span>
+          <ul>
+            <li><b>UC1:</b> Checklist da entrada, registro visual e físico por lote/endereço.</li>
+            <li><b>UC2:</b> Simulação real de cotação/troca com fornecedor Pará, registro de lead time.</li>
+            <li><b>UC3:</b> Endereçamento sensível ao sabor/tipo, inventário rotativo, registro e imagem dos toppings.</li>
+            <li><b>UC4:</b> Inventário automático, tracking, dashboard de giro de sabor e pedidos.</li>
+          </ul>
+        </div>
+        <div class="section-box purple">
+          <span class="section-title"><i class="fa-solid fa-lightbulb"></i> Insights Pesquisa & Ação Inicial</span>
+          <ol>
+            <li><b>Mapeamento e cotação de distribuidoras:</b>
+              <div class="glossario-box">Busque fornecedores reais via Google, registre lead time médio e requisitos logísticos; simule compra real e documente no sistema.</div>
+            </li>
+            <li><b>Registro por workflow digital:</b>
+              <div class="glossario-box">Quadro visual (Trello/Jamboard) com cada etapa de recebimento, preparação, separação combo, expedição.</div>
+            </li>
+            <li><b>Inventário e tracking:</b>
+              <div class="glossario-box">Simule rastreio dos combos, inventário QR-code, tracking do pedido do cliente final em ambiente escolar.</div>
+            </li>
+            <li><b>SOP completo:</b>
+              <div class="glossario-box">Procedimento detalhado por sabor, lote, expedição e controle de qualidade para o grupo, registro digital/impresso.</div>
+            </li>
+          </ol>
+        </div>
+        <div class="section-box purple">
+          <span class="section-title"><i class="fa-solid fa-warehouse"></i> Produto Final Esperado & Procedimento</span>
+          <ol>
+            <li><b>Importância:</b>
+              <div class="glossario-box">Procedimentos digitalizados validam inventário, rastreio e compliance real para o segmento; mostram domínio do ciclo completo.</div>
+            </li>
+            <li><b>Etapas para entrega:</b>
+              <ul>
+                <li>Cadastro dos SKUs no ERP, simulação de workflow, inventário QR, SOP na apresentação final.</li>
+                <li>Relatório real/simulado do giro de produto/pedido.</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+        <div class="section-box purple">
+          <span class="section-title">📖 Glossário</span>
+          <ul>
+            <li><b>Giro:</b> Velocidade de vendas/movimentação dos produtos.</li>
+            <li><b>Tracking:</b> Rastreamento do pedido e status.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- EVENTOS -->
+      <div class="tab-pane fade" id="tab4">
+        <h2 class="text-teal mb-3">🎉 EventMaster <small>Organização de Eventos</small></h2>
+        <div class="section-box teal">
+          <span class="section-title"><i class="fa-solid fa-shop"></i> Fatiamento do Mercado</span>
+          <ol>
+            <li><b>Exemplo de SKUs/Serviços:</b>
+              <ul>
+                <li>SKU301 - Locação de espaço corporativo (guarulhos, valor/hora, contrato digital, checklist serviço)</li>
+                <li>SKU302 - Kit catering eventos (cardápio, ficha técnica, QR confirmação, serviço por turno)</li>
+                <li>SKU303 - Gestão completa do evento (briefing digital, CRM, fotos, relatórios pós-evento)</li>
+                <li>SKU304 - Decoração temática completa (proposta aprovada, fotos, entrega, checklist)</li>
+              </ul>
+            </li>
+            <li><b>Insumos:</b>
+              <ul>
+                <li>Contratos digitais, fichas técnicas catering, listas de convidados, badges QR, app mobile, planilhas roteiro, fornecedores com SLA.</li>
+              </ul>
+            </li>
+            <li><b>Operação exemplo:</b>
+              <ol>
+                <li>Cadastro digital do cliente, briefing detalhado, aprovação da proposta via sistema.</li>
+                <li>Mapeamento dos fornecedores de espaço, buffet e decoração, cotação por e-mail e registro no CRM.</li>
+                <li>Execução do evento, checklist digital dos itens montados, registro de acompanhamento (fotos, tempo, feedback).</li>
+                <li>Pós-evento: relatório compartilhado, fotos, pesquisa de satisfação digital.</li>
+              </ol>
+            </li>
+          </ol>
+        </div>
+        <div class="section-box teal">
+          <span class="section-title"><i class="fa-solid fa-robot"></i> I.A. & Inovação</span>
+          <ol>
+            <li><b>Portal cliente com workflow digital:</b>
+              <div class="glossario-box">Contratos, propostas e briefings criados e aprovados online, registro de status, alertas automáticos no app, integração de agenda e feedback.</div>
+            </li>
+            <li><b>CRM e pipeline:</b>
+              <div class="glossario-box">Gestão do relacionamento centralizado via software, histórico de contato, cotações, aprovações e pendências de cada fornecedor.</div>
+            </li>
+            <li><b>Dynamic Pricing:</b>
+              <div class="glossario-box">Algoritmo (planilha/script) ajusta o valor do serviço conforme data/volume/local, recomendando melhor momento para contratação e maximização de margem.</div>
+            </li>
+            <li><b>App mobile checklist:</b>
+              <div class="glossario-box">Lista de tarefas do evento sincronizada entre equipe, alertando pendências e checklist de entrega, com upload de fotos instantâneo.</div>
+            </li>
+          </ol>
+        </div>
+        <div class="section-box teal">
+          <span class="section-title"><i class="fa-solid fa-cubes"></i> Conexão com UCs</span>
+          <ul>
+            <li><b>UC1:</b> Briefing digital, checklist de coleta de dados e aprovação do cliente (registro, compartilhamento).</li>
+            <li><b>UC2:</b> Pipeline dos fornecedores, simulação das cotações, documentos de SLA e aprovação dos pedidos.</li>
+            <li><b>UC3:</b> Gestão da timeline multicanal (app/Trello/CRM), controle de etapas e checklists do evento.</li>
+            <li><b>UC4:</b> Relatórios e fotos do evento, feedback por NPS, análise dos resultados e plano de melhoria.</li>
+          </ul>
+        </div>
+        <div class="section-box teal">
+          <span class="section-title"><i class="fa-solid fa-lightbulb"></i> Insights Pesquisa & Ação Inicial</span>
+          <ol>
+            <li><b>Pesquisa dos espaços e fornecedores:</b>
+              <div class="glossario-box">Consulta digital aos sites de eventos, hotéis, caterings, contato por e-mail, registro de tabela comparativa no CRM do grupo.</div>
+            </li>
+            <li><b>Cotação e registro no pipeline:</b>
+              <div class="glossario-box">Envio padrão de proposta aos fornecedores, análise crítica do tempo/valor/qualidade e registro no workflow digital.</div>
+            </li>
+            <li><b>Checklist digital de execução:</b>
+              <div class="glossario-box">Planilha compartilhada ou app para monitorar etapas, fotos dos pontos críticos, upload e registro automático no sistema.</div>
+            </li>
+            <li><b>Pós-evento:</b>
+              <div class="glossario-box">Feedback do cliente por app, análise NPS, relatório digital de cada pendência/proposta de melhoria enviada.</div>
+            </li>
+          </ol>
+        </div>
+        <div class="section-box teal">
+          <span class="section-title"><i class="fa-solid fa-warehouse"></i> Produto Final Esperado & Procedimento</span>
+          <ol>
+            <li><b>Importância:</b>
+              <div class="glossario-box">Integração dos conceitos logísticos à gestão de eventos, demonstra eficiência prática do grupo.</div>
+            </li>
+            <li><b>Etapas de entrega:</b>
+              <ul>
+                <li>SOP detalhado, CRM dos fornecedores, pipeline digital, checklist compartilhado e relatórios de resultado.</li>
+                <li>Apresentação do dashboard/workflow em reunião final, relatório de KPIs do evento, plano de evolução.</li>
+                <li>Feedback entregue e plano de ação documentado.</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+        <div class="section-box teal">
+          <span class="section-title">📖 Glossário</span>
+          <ul>
+            <li><b>SLA:</b> Service Level Agreement (acordo de nível de serviço).</li>
+            <li><b>Pipeline:</b> Fluxo de etapas/processos do serviço.</li>
+            <li><b>CRM:</b> Gestão de relacionamento.</li>
+            <li><b>NPS:</b> Net Promoter Score, indicador de satisfação do cliente.</li>
+          </ul>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
